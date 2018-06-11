@@ -1,0 +1,42 @@
+
+ext{
+
+    //kotlin_version = '1.2.30'
+    module = false
+
+    compileSdkVersion = 27
+    minSdkVersion = 21
+    targetSdkVersion = 27
+    versionCode = 1
+    versionName = "1.0"
+
+    applicationId = "com.thanatos.wanandroid"
+
+    dependencies{
+        fileTree = fileTree(dir: 'libs', include: ['*.jar'])
+
+        kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jre7:"+kotlin_version
+
+        junit = 'junit:junit:4.12'
+        android_test = 'com.android.support.test:runner:1.0.2'
+        espresso_core = 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+        appcompat = 'com.android.support:appcompat-v7:27.1.1'
+        constraint_layout = 'com.android.support.constraint:constraint-layout:1.1.1'
+
+        //thridPart
+        okhttp = 'com.squareup.okhttp3:okhttp:3.10.0'
+        okhttp_log = 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+
+        gson = 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+        retrofit = 'com.squareup.retrofit2:retrofit:2.3.0'
+        retrofit_rxjava_adapter = 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
+        rxAndroid = 'io.reactivex.rxjava2:rxandroid:2.0.2'
+        rxJava = 'io.reactivex.rxjava2:rxjava:2.1.9'
+
+        glide = 'com.github.bumptech.glide:glide:4.5.0'
+
+    }
+}
