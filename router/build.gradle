@@ -1,20 +1,17 @@
-apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
-
-apply plugin: 'kotlin-kapt'
-
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
+
+
     defaultConfig {
-        applicationId rootProject.ext.applicationId
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
@@ -25,14 +22,13 @@ android {
 }
 
 dependencies {
-    implementation rootProject.ext.kotlin_stdlib
+    implementation rootProject.ext.fileTree
+
+    testImplementation rootProject.ext.junit
+    androidTestImplementation rootProject.ext.android_test
+    androidTestImplementation rootProject.ext.espresso_core
 
     implementation rootProject.ext.appcompat
-    implementation rootProject.ext.constraint_layout
 
-    api project(':baselibrary')
-    kapt rootProject.ext.router_compiler
-}
-repositories {
-    mavenCentral()
+    api rootProject.ext.router_annotation
 }

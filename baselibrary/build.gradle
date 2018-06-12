@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -33,6 +34,9 @@ dependencies {
 
     implementation rootProject.ext.appcompat
     implementation rootProject.ext.constraint_layout
+
+    //router
+    api project(':router')
 
     //thirdPart
     implementation rootProject.ext.okhttp

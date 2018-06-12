@@ -1,7 +1,6 @@
 
 ext{
 
-    //kotlin_version = '1.2.30'
     module = false
 
     compileSdkVersion = 27
@@ -23,6 +22,11 @@ ext{
 
         appcompat = 'com.android.support:appcompat-v7:27.1.1'
         constraint_layout = 'com.android.support.constraint:constraint-layout:1.1.1'
+
+        //router
+        router_compiler = 'pw.androidthanatos:router-compiler:1.0.0@jar'
+        router_annotation = 'pw.androidthanatos:router-annotation:1.0.0@jar'
+
 
         //thridPart
         okhttp = 'com.squareup.okhttp3:okhttp:3.10.0'
