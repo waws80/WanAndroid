@@ -1,18 +1,15 @@
 package com.thanatos.wanandroid
 
-import android.app.Application
+import com.thanatos.baselibrary.base.BaseApplication
 
 import pw.androidthanatos.annotation.Module
 import pw.androidthanatos.annotation.Modules
-import pw.androidthanatos.router.Router
 
 @Modules("app")
 @Module("app")
-class App : Application() {
+class App : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        Router.init(this)
-        Router.debug(true)
     }
 }

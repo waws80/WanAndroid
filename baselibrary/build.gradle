@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -11,6 +13,9 @@ android {
         versionName rootProject.ext.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //自定义变量
+        buildConfigField 'boolean','APP_DEBUG','true'
 
     }
 
@@ -25,19 +30,16 @@ android {
 
 dependencies {
     implementation rootProject.ext.fileTree
-
     implementation rootProject.ext.kotlin_stdlib
-
     testImplementation rootProject.ext.junit
     androidTestImplementation rootProject.ext.android_test
     androidTestImplementation rootProject.ext.espresso_core
-
     implementation rootProject.ext.appcompat
     implementation rootProject.ext.constraint_layout
-
     //router
     api project(':router')
-
+    //permission
+    api project(':premission')
     //thirdPart
     implementation rootProject.ext.okhttp
     implementation rootProject.ext.okhttp_log
