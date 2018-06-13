@@ -5,11 +5,18 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.support.constraint.ConstraintHelper
+import android.support.constraint.ConstraintLayout
+import android.support.constraint.ConstraintSet
 import android.support.v7.widget.AppCompatImageButton
 import android.support.v7.widget.AppCompatImageView
 import android.support.v7.widget.Toolbar
 import android.util.AttributeSet
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.thanatos.baselibrary.ext.dp2px
 import com.thanatos.baselibrary.ext.setStatusBar
@@ -22,17 +29,18 @@ import com.thanatos.baseres.R
  *  @createTime: 2018/6/13
  *  @updateTime: 2018/6/13 16:17
  */
-class ProgressToolbar : RelativeLayout{
+class ProgressToolbar : ConstraintLayout{
 
-    private lateinit var mParams: ViewGroup.LayoutParams
-
-    private lateinit var mNavParams: RelativeLayout.LayoutParams
+    private lateinit var mNavParams: ConstraintLayout.LayoutParams
 
     //view
     private lateinit var mNavImageButton: AppCompatImageButton
 
     //attr
     private var mHeight: Int = 0
+    private var mColor: Int = Color.rgb(255,255,255)
+
+    private var mNavDrawable: Drawable? = null
 
 
     constructor(context: Context): super(context, null)
@@ -49,25 +57,28 @@ class ProgressToolbar : RelativeLayout{
     }
 
     private fun initValue(array: TypedArray){
-        mHeight = array.getDimensionPixelOffset(R.styleable.ProgressToolbar_toolbarHeight,context.dp2px(56))
+        mHeight = array.getDimensionPixelOffset(R.styleable.ProgressToolbar_toolbarHeight,
+                context.dp2px(56))
+        mColor = array.getColor(R.styleable.ProgressToolbar_toolbarBgColor,
+                resources.getColor(R.color.colorPrimary))
 
+        for (index in 0 until  array.indexCount){
+            val attr = array.getIndex(index)
+            if (attr == R.styleable.ProgressToolbar_toolbarNav){
+                mNavDrawable = array.getDrawable(attr)
+            }
+        }
+        if (mNavDrawable == null){
+            mNavDrawable = resources.getDrawable(R.drawable.ic_back)
+        }
 
     }
 
     private fun initUI(){
-        //设置标题栏高度
-         mParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                 ViewGroup.LayoutParams.WRAP_CONTENT)
-        mParams.height = mHeight
 
-        //设置导航view大小
-        mNavParams = RelativeLayout.LayoutParams(context.dp2px(25),context.dp2px(25))
-        mNavParams.addRule(RelativeLayout.CENTER_VERTICAL)
-        mNavParams.leftMargin = context.dp2px(16)
+        initParent()
 
-        mNavImageButton = AppCompatImageButton(context,null,R.attr.toolbarNavigationButtonStyle)
-        mNavImageButton.layoutParams = mNavParams
-        addView(mNavImageButton)
+        initNavImageButton()
 
     }
 
@@ -78,6 +89,55 @@ class ProgressToolbar : RelativeLayout{
     fun setStatusBar(color: Int = Color.argb(60,0,0,0), light: Boolean = false){
         if (context is Activity){
             (context as Activity).setStatusBar(color,light)
+        }
+    }
+
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        val mode = MeasureSpec.getMode(heightMeasureSpec)
+        var size = MeasureSpec.getSize(heightMeasureSpec)
+        if (mode == MeasureSpec.UNSPECIFIED || mode == MeasureSpec.AT_MOST){
+            //设置标题栏高度
+            size = mHeight
+        }
+        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec),size)
+
+    }
+
+    /**
+     * 初始化容器
+     */
+    private fun initParent(){
+        elevation = context.dp2px(6).toFloat()
+        setBackgroundColor(mColor)
+    }
+
+    private fun initLeft(){
+
+    }
+
+    /**
+     * https://www.itstrike.cn/Question/f39da80a-1c1d-4546-b8b6-1716d72391d8.html
+     */
+    private fun initNavImageButton(){
+        //设置导航view大小
+        mNavParams = ConstraintLayout.LayoutParams(context.dp2px(25),context.dp2px(25))
+        val set = ConstraintSet()
+        set.clone(this)
+        set.centerVertically(id,0)
+        set.applyTo(this)
+        mNavParams.marginStart = context.dp2px(16)
+
+        mNavImageButton = AppCompatImageButton(context,null,R.attr.toolbarNavigationButtonStyle)
+        mNavImageButton.layoutParams = mNavParams
+        mNavImageButton.setBackgroundResource(R.drawable.ic_launcher_background)
+        mNavImageButton.isClickable = true
+        addView(mNavImageButton)
+
+        mNavDrawable.run {
+            this?.setBounds(0,0,this.intrinsicWidth,this.intrinsicHeight)
+            mNavImageButton.setImageDrawable(mNavDrawable)
         }
     }
 

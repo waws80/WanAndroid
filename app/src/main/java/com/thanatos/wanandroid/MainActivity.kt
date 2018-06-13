@@ -3,6 +3,7 @@ package com.thanatos.wanandroid
 import android.Manifest
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.RelativeLayout
 import com.thanatos.baselibrary.base.BaseActivity
 import com.thanatos.baselibrary.ext.setStatusBar
 import pw.androidthanatos.annotation.Path

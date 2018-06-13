@@ -10,6 +10,8 @@
 
     <declare-styleable name="ProgressToolbar">
         <attr name="toolbarHeight" format="reference|dimension"/>
+        <attr name="toolbarBgColor" format="color|reference"/>
+        <attr name="toolbarNav" format="reference"/>
     </declare-styleable>
 
 </resources>
