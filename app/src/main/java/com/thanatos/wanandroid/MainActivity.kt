@@ -1,8 +1,10 @@
 package com.thanatos.wanandroid
 
 import android.Manifest
+import android.graphics.Color
 import android.os.Bundle
 import com.thanatos.baselibrary.base.BaseActivity
+import com.thanatos.baselibrary.ext.setStatusBar
 import pw.androidthanatos.annotation.Path
 import top.waws.premission.PermissionUtil
 import java.util.*
@@ -25,7 +27,6 @@ class MainActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-
 
     }
 

@@ -31,4 +31,6 @@ dependencies {
     androidTestImplementation rootProject.ext.android_test
     androidTestImplementation rootProject.ext.espresso_core
     implementation rootProject.ext.appcompat
+
+    api project(':baseres')
 }

@@ -1,1 +1,1 @@
-include ':app', ':baselibrary', ':mine', 'router', 'premission'
+include ':app', ':baselibrary', ':mine', ':baseres', 'router', 'premission'

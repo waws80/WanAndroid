@@ -31,4 +31,6 @@ dependencies {
     implementation rootProject.ext.appcompat
 
     api rootProject.ext.router_annotation
+
+    api project(':baseres')
 }

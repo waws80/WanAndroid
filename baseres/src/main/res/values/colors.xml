@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#607D8B</color>
+    <color name="colorPrimaryDark">#455A64</color>
+    <color name="colorAccent">#9E9E9E</color>
+    <!--标题颜色-->
+    <color name="textColorPrimary">#FFFFFF</color>
+    <!--文本颜色-->
+    <color name="textColor">#212121</color>
+    <color name="editTextColor">#212121</color>
+
+    <color name="secondTextColor">#757575</color>
+
+    <!--分割线-->
+    <color name="colorForeground">#BDBDBD</color>
+
+    <!--背景颜色-->
+    <color name="windowBackground">#FFFFFF</color>
+
+    <!--控件默认颜色-->
+    <color name="colorButtonNormal">#787878</color>
+
+    <!--控件按下颜色-->
+    <color name="colorControlHighlight">#757575</color>
+
+    <!--控件不可按颜色-->
+    <color name="colorControlDisable">#BDBDBD</color>
+
+    <!--控件选中颜色-->
+    <color name="colorControlActivated">#607D8B</color>
+</resources>
