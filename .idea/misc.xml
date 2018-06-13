@@ -35,6 +35,7 @@
     <option name="modulesWithSuppressedNotConfigured">
       <set>
         <option value="app" />
+        <option value="mine" />
         <option value="router_annotation" />
       </set>
     </option>

@@ -5,7 +5,7 @@ import com.thanatos.baselibrary.base.BaseApplication
 import pw.androidthanatos.annotation.Module
 import pw.androidthanatos.annotation.Modules
 
-@Modules("app")
+@Modules("app","mine")
 @Module("app")
 class App : BaseApplication() {
 

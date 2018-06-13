@@ -22,12 +22,8 @@ android {
 }
 
 dependencies {
-    implementation rootProject.ext.kotlin_stdlib
-
-    implementation rootProject.ext.appcompat
-    implementation rootProject.ext.constraint_layout
-
     api project(':baselibrary')
+    api project(':mine')
     kapt rootProject.ext.router_compiler
 }
 repositories {
