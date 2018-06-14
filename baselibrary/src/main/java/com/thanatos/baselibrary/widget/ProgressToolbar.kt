@@ -245,7 +245,11 @@ class ProgressToolbar : ConstraintLayout{
         mMenuGroup.orientation = LinearLayout.HORIZONTAL
         mMenuGroup.gravity = Gravity.CENTER_VERTICAL
 
-        mMenuGroup.addView(Button(context))
+        val bt = Button(context)
+        bt.text = "haha"
+        mMenuGroup.addView(bt)
+
+        addView(mMenuGroup)
 
         //设置menu的约束
         val set = ConstraintSet()
