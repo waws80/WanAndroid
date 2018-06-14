@@ -12,6 +12,7 @@
         <attr name="toolbarHeight" format="reference|dimension"/>
         <attr name="toolbarBgColor" format="color|reference"/>
         <attr name="toolbarNav" format="reference"/>
+        <attr name="toolbarMenu" format="reference"/>
     </declare-styleable>
 
 </resources>

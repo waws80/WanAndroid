@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="toolbar_id" type="id"/>
+    <item name="toolbar_nav_id" type="id"/>
+    <item name="toolbar_progress_id" type="id"/>
+    <item name="toolbar_title_id" type="id"/>
+    <item name="toolbar_menu_id" type="id"/>
+    <item name="toolbar_menu_group_id" type="id"/>
+</resources>
