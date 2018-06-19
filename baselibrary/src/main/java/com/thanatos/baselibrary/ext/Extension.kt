@@ -9,7 +9,13 @@ import android.os.Build
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.WindowManager
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import jp.wasabeef.glide.transformations.CropCircleTransformation
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 /**
  * 设置状态栏（仅适用于使用v7包下的ToolBar页面）
@@ -19,23 +25,28 @@ import android.view.WindowManager
  */
 @SuppressLint("ObsoleteSdkInt")
 fun  Activity.setStatusBar(color: Int = Color.argb(180,0,0,0), lightMode: Boolean = false){
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = color
+
     }else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT){
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        val mContentView: ViewGroup = window.findViewById(Window.ID_ANDROID_CONTENT)
+        mContentView.fitsSystemWindows = true
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         //根布局添加占位状态栏
-        val decorView = window.decorView as ViewGroup
         val statusBarView = View(this)
         val lp = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
         getStatusBarHeight())
         statusBarView.setBackgroundColor(color)
-        decorView.addView(statusBarView, lp)
+        (window.decorView as ViewGroup).addView(statusBarView, lp)
     }
 
     if (lightMode){ //状态栏设置为黑色
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
+            //View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or 去掉了
+            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
         }
     }
 }
@@ -64,4 +75,42 @@ fun Context.dp2px(dp: Int): Int{
  */
 fun Context.sp2px(sp: Int): Int{
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,sp.toFloat(),resources.displayMetrics).toInt()
+}
+
+/**
+ * px转dp
+ */
+fun Context.px2dp(px: Int): Int{
+    val scale = resources.displayMetrics.density
+    return (px / scale + 0.5f).toInt()
+}
+
+/**
+ * px转sp
+ */
+fun Context.px2sp(px: Int): Int{
+    val scale = resources.displayMetrics.scaledDensity
+    return (px / scale + 0.5f).toInt()
+}
+
+/**
+ * 加载圆形图片
+ * iv.circle("http://img.zcool.cn/community/01664d5867d034a801219c77c8d449.gif",dp2px(50))
+ */
+fun ImageView.circle(url: String){
+
+    Glide.with(this).load(url)
+            .apply(RequestOptions.circleCropTransform())
+            .into(this)
+
+}
+
+/**
+ * 加载圆角图片
+ * iv.roundRect("http://img.zcool.cn/community/01664d5867d034a801219c77c8d449.gif",dp2px(50))
+ */
+fun ImageView.roundRect(url: String,round: Int = 18){
+    Glide.with(this).load(url)
+            .apply(RequestOptions.bitmapTransform(RoundedCornersTransformation(round,0)))
+            .into(this)
 }

@@ -14,7 +14,7 @@ ext{
     dependencies{
         fileTree = fileTree(dir: 'libs', include: ['*.jar'])
 
-        kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jre7:"+kotlin_version
+        kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:"+kotlin_version
 
         junit = 'junit:junit:4.12'
         android_test = 'com.android.support.test:runner:1.0.2'

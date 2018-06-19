@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">WanAndroid</string>
+
+    <string name="app_loading">请稍后&#8230;</string>
+    <string name="app_empty">暂无数据</string>
 </resources>

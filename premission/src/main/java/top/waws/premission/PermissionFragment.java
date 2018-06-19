@@ -239,7 +239,6 @@ public final class PermissionFragment extends Fragment implements PermissionRequ
         transaction.remove(this).commit();
     }
 
-
     /**
      * 开始请求权限
      */

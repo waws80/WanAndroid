@@ -9,10 +9,46 @@
     </style>
 
     <declare-styleable name="ProgressToolbar">
-        <attr name="toolbarHeight" format="reference|dimension"/>
+        <!--标题栏高度-->
+        <attr name="toolbarHeight" format="dimension|reference"/>
+        <!--标题栏颜色-->
         <attr name="toolbarBgColor" format="color|reference"/>
+        <!--标题栏返回按钮-->
         <attr name="toolbarNav" format="reference"/>
+        <!--标题栏菜单-->
         <attr name="toolbarMenu" format="reference"/>
+        <!--标题栏是否显示返回按钮-->
+        <attr name="toolbarShowNav" format="boolean"/>
+        <!--标题栏是否显示菜单按钮-->
+        <attr name="toolbarShowMenu" format="boolean"/>
+        <!--标题栏是否显示进度条-->
+        <attr name="toolbarShowProgress" format="boolean"/>
+        <!--标题栏标题文本-->
+        <attr name="toolbarTitle" format="string|reference"/>
+        <!--标题栏文本颜色-->
+        <attr name="toolbarTitleColor" format="string|reference"/>
+        <!--标题栏文本粗体-->
+        <attr name="toolbarTitleBold" format="boolean"/>
+        <!--标题栏文本字体大小-->
+        <attr name="toolbarTitleSize" format="dimension|reference"/>
+        <!--标题栏位置-->
+        <attr name="toolbarTitleGravity" format="enum">
+            <enum value="17" name="CENTER"/>
+            <enum value="3" name="LEFT"/>
+        </attr>
+        <!--状态栏颜色-->
+        <attr name="statusBarColor" format="color|reference"/>
+        <!--状态栏模式-->
+        <attr name="statusBarMode" format="enum">
+            <enum value="0" name="Light"/>
+            <enum value="1" name="Dark"/>
+        </attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="RoundImageView">
+        <attr name="maskColor" format="reference|color"/>
+        <attr name="radius" format="reference|dimension"/>
     </declare-styleable>
 
 </resources>
