@@ -1,5 +1,6 @@
 package com.thanatos.baselibrary.base;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
@@ -18,6 +19,7 @@ import top.waws.premission.PermissionUtil;
  */
 public class BaseApplication extends Application{
 
+    @SuppressLint("StaticFieldLeak")
     private static Context  mContext;
 
     @Override

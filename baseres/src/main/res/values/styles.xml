@@ -45,10 +45,4 @@
         </attr>
     </declare-styleable>
 
-
-    <declare-styleable name="RoundImageView">
-        <attr name="maskColor" format="reference|color"/>
-        <attr name="radius" format="reference|dimension"/>
-    </declare-styleable>
-
 </resources>

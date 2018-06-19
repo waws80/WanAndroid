@@ -43,16 +43,15 @@ dependencies {
     //thirdPart
     implementation rootProject.ext.okhttp
     implementation rootProject.ext.okhttp_log
-    implementation rootProject.ext.gson
+    api rootProject.ext.gson
     implementation rootProject.ext.retrofit
 
     implementation rootProject.ext.retrofit_rxjava_adapter
-    implementation rootProject.ext.rxAndroid
+    api rootProject.ext.rxAndroid
     api rootProject.ext.rxJava
-    implementation rootProject.ext.glide
     api rootProject.ext.design
 
-    implementation 'jp.wasabeef:glide-transformations:3.3.0'
-    // If you want to use the GPU Filters
-    implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+    implementation rootProject.ext.glide
+    implementation rootProject.ext.glide_transformations
+    implementation rootProject.ext.gpuimage_library
 }

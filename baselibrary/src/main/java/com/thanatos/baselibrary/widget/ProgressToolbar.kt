@@ -28,20 +28,21 @@ import com.thanatos.baseres.R
  *  @createTime: 2018/6/13
  *  @updateTime: 2018/6/13 16:17
  */
-open class ProgressToolbar : RelativeLayout{
+open class ProgressToolbar
+    : RelativeLayout{
 
-    private lateinit var mNavParams: LayoutParams
-    private lateinit var mProgressParams: LayoutParams
-    private lateinit var mTitleParams: LayoutParams
-    private lateinit var mMenuParams: LayoutParams
-    private lateinit var mMenuGroupParams: LayoutParams
+    private var mNavParams: LayoutParams? = null
+    private var mProgressParams: LayoutParams? = null
+    private var mTitleParams: LayoutParams? = null
+    private var mMenuParams: LayoutParams? = null
+    private var mMenuGroupParams: LayoutParams? = null
 
     //view
-    private lateinit var mNavImageButton: AppCompatImageButton
-    private lateinit var mProgressBar: ProgressBar
-    private lateinit var mTitle: AppCompatTextView
-    private lateinit var mMenu: AppCompatImageButton
-    private lateinit var mMenuGroup: LinearLayout
+    private var mNavImageButton: AppCompatImageButton? = null
+    private var mProgressBar: ProgressBar? = null
+    private var mTitle: AppCompatTextView? = null
+    private var mMenu: AppCompatImageButton? = null
+    private var mMenuGroup: LinearLayout? = null
 
     //attr
     private var mHeight: Int = 0
@@ -53,7 +54,7 @@ open class ProgressToolbar : RelativeLayout{
 
     private var mTitleText: String = ""
     private var mTitleTextColor: Int = Color.WHITE
-    private var mTItleBoldStyle: Boolean = false
+    private var mTitleBoldStyle: Boolean = false
     private var mTitleTextSize: Float = 18f
     private var mTitleGravity: Int = Gravity.CENTER
 
@@ -63,24 +64,19 @@ open class ProgressToolbar : RelativeLayout{
     private var mNavDrawable: Drawable? = null
     private var mMenuDrawable: Drawable? = null
 
+    constructor(context: Context) : this(context, null) {
+    }
 
-    constructor(context: Context): this(context,null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs,0) {
+    }
 
-    constructor(context: Context, attributeSet: AttributeSet?)
-            : super(context,attributeSet){
-        val array = context.obtainStyledAttributes(attributeSet,R.styleable.ProgressToolbar)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        val array = context.obtainStyledAttributes(attrs,R.styleable.ProgressToolbar)
         initValue(array)
         array.recycle()
         initUI()
     }
 
-    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int)
-            : super(context,attributeSet,defStyleAttr){
-        val array = context.obtainStyledAttributes(attributeSet,R.styleable.ProgressToolbar)
-        initValue(array)
-        array.recycle()
-        initUI()
-    }
 
     private fun initValue(array: TypedArray){
         mHeight = array.getDimensionPixelOffset(R.styleable.ProgressToolbar_toolbarHeight,
@@ -98,7 +94,7 @@ open class ProgressToolbar : RelativeLayout{
         mTitleTextColor = array.getColor(R.styleable.ProgressToolbar_toolbarTitleColor,Color.WHITE)
         val size = array.getDimension(R.styleable.ProgressToolbar_toolbarTitleSize,context.sp2px(18).toFloat())
         mTitleTextSize = context.px2sp(size.toInt()).toFloat()
-        mTItleBoldStyle = array.getBoolean(R.styleable.ProgressToolbar_toolbarTitleBold,false)
+        mTitleBoldStyle = array.getBoolean(R.styleable.ProgressToolbar_toolbarTitleBold,false)
         mTitleGravity = array.getInt(R.styleable.ProgressToolbar_toolbarTitleGravity,Gravity.CENTER)
 
         mStatusBarColor = array.getColor(R.styleable.ProgressToolbar_statusBarColor,resources.getColor(R.color.colorPrimaryDark))
@@ -155,43 +151,43 @@ open class ProgressToolbar : RelativeLayout{
     }
 
     public fun setNavIcon(@NonNull drawable: Drawable): ProgressToolbar{
-        if (mNavImageButton.visibility == View.GONE){
-            mNavImageButton.visibility = View.VISIBLE
-            if (mProgressBar.visibility == View.VISIBLE){
-                mProgressParams.leftMargin = context.dp2px(45)
+        if (mNavImageButton?.visibility == View.GONE){
+            mNavImageButton?.visibility = View.VISIBLE
+            if (mProgressBar?.visibility == View.VISIBLE){
+                mProgressParams?.leftMargin = context.dp2px(45)
                 if (mTitleGravity == Gravity.LEFT){
-                    mTitleParams.leftMargin = context.dp2px(80)
+                    mTitleParams?.leftMargin = context.dp2px(80)
                 }
             }else{
                 if (mTitleGravity == Gravity.LEFT){
-                    mTitleParams.leftMargin = context.dp2px(45)
+                    mTitleParams?.leftMargin = context.dp2px(45)
                 }
             }
         }
 
-        mNavImageButton.setImageDrawable(drawable)
+        mNavImageButton?.setImageDrawable(drawable)
 
-        mNavImageButton.layoutParams = mNavParams
-        mProgressBar.layoutParams = mProgressParams
-        mTitle.layoutParams = mTitleParams
+        mNavImageButton?.layoutParams = mNavParams
+        mProgressBar?.layoutParams = mProgressParams
+        mTitle?.layoutParams = mTitleParams
 
         return this
     }
 
     public fun hideNav(): ProgressToolbar{
-        if(mNavImageButton.visibility == View.VISIBLE){
-            mNavImageButton.visibility = View.GONE
-            if (mProgressBar.visibility == View.VISIBLE){
-                mProgressParams.leftMargin = context.dp2px(10)
-                mProgressBar.layoutParams = mProgressParams
+        if(mNavImageButton?.visibility == View.VISIBLE){
+            mNavImageButton?.visibility = View.GONE
+            if (mProgressBar?.visibility == View.VISIBLE){
+                mProgressParams?.leftMargin = context.dp2px(10)
+                mProgressBar?.layoutParams = mProgressParams
                 if (mTitleGravity == Gravity.LEFT){
-                    mTitleParams.leftMargin = context.dp2px(45)
-                    mTitle.layoutParams = mTitleParams
+                    mTitleParams?.leftMargin = context.dp2px(45)
+                    mTitle?.layoutParams = mTitleParams
                 }
             }else{
                 if (mTitleGravity == Gravity.LEFT){
-                    mTitleParams.leftMargin = context.dp2px(10)
-                    mTitle.layoutParams = mTitleParams
+                    mTitleParams?.leftMargin = context.dp2px(10)
+                    mTitle?.layoutParams = mTitleParams
                 }
             }
 
@@ -200,40 +196,40 @@ open class ProgressToolbar : RelativeLayout{
     }
 
     public fun showProgress(color: Int = Color.WHITE): ProgressToolbar{
-        if (mProgressBar.visibility == View.GONE){
-            mProgressBar.visibility = View.VISIBLE
-            if (mNavImageButton.visibility == View.VISIBLE){
-                mProgressParams.leftMargin = context.dp2px(45)
+        if (mProgressBar?.visibility == View.GONE){
+            mProgressBar?.visibility = View.VISIBLE
+            if (mNavImageButton?.visibility == View.VISIBLE){
+                mProgressParams?.leftMargin = context.dp2px(45)
                 if (mTitleGravity == Gravity.LEFT){
-                    mTitleParams.leftMargin = context.dp2px(80)
+                    mTitleParams?.leftMargin = context.dp2px(80)
                 }
             }else{
-                mProgressParams.leftMargin = context.dp2px(10)
+                mProgressParams?.leftMargin = context.dp2px(10)
                 if (mTitleGravity == Gravity.LEFT){
-                    mTitleParams.leftMargin = context.dp2px(45)
+                    mTitleParams?.leftMargin = context.dp2px(45)
                 }
             }
         }
-        mNavImageButton.layoutParams = mNavParams
-        mProgressBar.layoutParams = mProgressParams
-        mTitle.layoutParams = mTitleParams
+        mNavImageButton?.layoutParams = mNavParams
+        mProgressBar?.layoutParams = mProgressParams
+        mTitle?.layoutParams = mTitleParams
 
-        mProgressBar.indeterminateTintList = ColorStateList.valueOf(color)
+        mProgressBar?.indeterminateTintList = ColorStateList.valueOf(color)
 
         return this
     }
 
     public fun hideProgress(): ProgressToolbar{
-        if (mProgressBar.visibility == View.VISIBLE){
-            mProgressBar.visibility = View.GONE
+        if (mProgressBar?.visibility == View.VISIBLE){
+            mProgressBar?.visibility = View.GONE
             if (mTitleGravity == Gravity.LEFT ){
 
-                if (mNavImageButton.visibility == View.VISIBLE){
-                    mTitleParams.leftMargin = context.dp2px(45)
+                if (mNavImageButton?.visibility == View.VISIBLE){
+                    mTitleParams?.leftMargin = context.dp2px(45)
                 }else{
-                    mTitleParams.leftMargin = context.dp2px(10)
+                    mTitleParams?.leftMargin = context.dp2px(10)
                 }
-                mTitle.layoutParams = mTitleParams
+                mTitle?.layoutParams = mTitleParams
             }
         }
         return this
@@ -245,13 +241,13 @@ open class ProgressToolbar : RelativeLayout{
     }
 
     public fun setMenuIcon(@NonNull drawable: Drawable): ProgressToolbar{
-        if (mMenu.visibility == View.GONE){
-            mMenu.visibility = View.VISIBLE
-            mMenuGroupParams.rightMargin = context.dp2px(40)
-            mMenuGroup.layoutParams = mMenuGroupParams
+        if (mMenu?.visibility == View.GONE){
+            mMenu?.visibility = View.VISIBLE
+            mMenuGroupParams?.rightMargin = context.dp2px(40)
+            mMenuGroup?.layoutParams = mMenuGroupParams
         }
 
-        mMenu.setImageDrawable(drawable)
+        mMenu?.setImageDrawable(drawable)
 
         return this
     }
@@ -260,47 +256,47 @@ open class ProgressToolbar : RelativeLayout{
      * 隐藏右边菜单按钮
      */
     public fun hideRightMenu(): ProgressToolbar{
-        if (mMenu.visibility == View.VISIBLE){
-            mMenu.visibility = View.GONE
-            mMenuGroupParams.rightMargin = context.dp2px(10)
-            mMenuGroup.layoutParams = mMenuGroupParams
+        if (mMenu?.visibility == View.VISIBLE){
+            mMenu?.visibility = View.GONE
+            mMenuGroupParams?.rightMargin = context.dp2px(10)
+            mMenuGroup?.layoutParams = mMenuGroupParams
         }
         return this
     }
 
     public fun showMenuGroup(): ProgressToolbar{
-        mMenuGroup.visibility = View.VISIBLE
+        mMenuGroup?.visibility = View.VISIBLE
         return this
     }
 
     public fun showAllMenu(): ProgressToolbar{
-        mMenu.visibility = View.VISIBLE
-        mMenuGroup.visibility = View.VISIBLE
+        mMenu?.visibility = View.VISIBLE
+        mMenuGroup?.visibility = View.VISIBLE
         return this
     }
 
     public fun hideMenuGroup(): ProgressToolbar{
-        mMenuGroup.visibility = View.GONE
+        mMenuGroup?.visibility = View.GONE
         return this
     }
 
     public fun hideAllMenu(): ProgressToolbar{
-        mMenu.visibility = View.GONE
-        mMenuGroup.visibility = View.GONE
+        mMenu?.visibility = View.GONE
+        mMenuGroup?.visibility = View.GONE
         return this
     }
 
     public fun clearMenuGroup(): ProgressToolbar{
-        val count = mMenuGroup.childCount
+        val count = mMenuGroup?.childCount!!
         if (count > 0){
-            mMenuGroup.removeAllViews()
+            mMenuGroup?.removeAllViews()
         }
         return this
     }
 
     public fun addMenu(text: String, textColor: Int = Color.WHITE, textSize: Float = 12f,
                        drawable: Drawable?, click:()-> Unit): ProgressToolbar{
-        if (mMenuGroup.childCount >= 2)return this
+        if (mMenuGroup?.childCount!! >= 2)return this
         val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT)
         params.height = context.dp2px(25)
@@ -313,7 +309,7 @@ open class ProgressToolbar : RelativeLayout{
         menu.gravity = Gravity.CENTER
         menu.layoutParams = params
         menu.isClickable = true
-        mMenuGroup.addView(menu)
+        mMenuGroup?.addView(menu)
         menu.setOnClickListener {
             click.invoke()
         }
@@ -322,7 +318,7 @@ open class ProgressToolbar : RelativeLayout{
     }
 
     public fun addMenu(drawable: Drawable, click:()-> Unit): ProgressToolbar{
-        if (mMenuGroup.childCount >= 2)return this
+        if (mMenuGroup?.childCount!! >= 2)return this
         val params = LinearLayout.LayoutParams(context.dp2px(25),
                 context.dp2px(25))
         params.leftMargin = context.dp2px(10)
@@ -331,7 +327,7 @@ open class ProgressToolbar : RelativeLayout{
         menu.setBackgroundResource(R.drawable.ripple_circle_bg)
         menu.layoutParams = params
         menu.isClickable = true
-        mMenuGroup.addView(menu)
+        mMenuGroup?.addView(menu)
         menu.setOnClickListener{
             click.invoke()
         }
@@ -340,30 +336,30 @@ open class ProgressToolbar : RelativeLayout{
 
     @Nullable
     public fun <V: View> getMenu(@NonNull gravity: Int): V?{
-        if (mMenuGroup.childCount == 0){
+        if (mMenuGroup?.childCount == 0){
             return null
         }
-        if (mMenuGroup.childCount == 1){
-            return mMenuGroup.getChildAt(0) as V
+        if (mMenuGroup?.childCount == 1){
+            return mMenuGroup?.getChildAt(0) as V
         }
         if (gravity == Gravity.LEFT || gravity == Gravity.START){
-            return mMenuGroup.getChildAt(0) as V
+            return mMenuGroup?.getChildAt(0) as V
         }
         if (gravity == Gravity.RIGHT || gravity == Gravity.END){
-            return mMenuGroup.getChildAt(1) as V
+            return mMenuGroup?.getChildAt(1) as V
         }
         return null
     }
 
     public fun setNavClickListener(click: () -> Unit){
-        setNavIcon(mNavDrawable!!)
-        mNavImageButton.setOnClickListener { click.invoke() }
+        //setNavIcon(mNavDrawable!!)
+        mNavImageButton?.setOnClickListener { click.invoke() }
 
     }
 
     public fun setMenuClickListener(click: () -> Unit){
-        setMenuIcon(mMenuDrawable!!)
-        mMenu.setOnClickListener { click.invoke() }
+        //setMenuIcon(mMenuDrawable!!)
+        mMenu?.setOnClickListener { click.invoke() }
     }
 
     override fun onDetachedFromWindow() {
@@ -397,37 +393,37 @@ open class ProgressToolbar : RelativeLayout{
     private fun initNavImageButton(){
         //初始化
         mNavParams = LayoutParams(context.dp2px(25),context.dp2px(25))
-        mNavParams.addRule(RelativeLayout.CENTER_VERTICAL)
-        mNavParams.leftMargin = context.dp2px(10)
+        mNavParams?.addRule(RelativeLayout.CENTER_VERTICAL)
+        mNavParams?.leftMargin = context.dp2px(10)
         mNavImageButton = AppCompatImageButton(context)
-        mNavImageButton.layoutParams = mNavParams
-        mNavImageButton.setBackgroundResource(R.drawable.ripple_circle_bg)
-        mNavImageButton.isClickable = true
+        mNavImageButton?.layoutParams = mNavParams
+        mNavImageButton?.setBackgroundResource(R.drawable.ripple_circle_bg)
+        mNavImageButton?.isClickable = true
         addView(mNavImageButton)
-        mNavImageButton.visibility = if (mShowNav) View.VISIBLE else View.GONE
+        mNavImageButton?.visibility = if (mShowNav) View.VISIBLE else View.GONE
 
         mNavDrawable.run {
             this?.setBounds(0,0,this.intrinsicWidth,this.intrinsicHeight)
-            mNavImageButton.setImageDrawable(mNavDrawable)
+            mNavImageButton?.setImageDrawable(mNavDrawable)
         }
-        mNavImageButton.id = R.id.toolbar_nav_id
+        mNavImageButton?.id = R.id.toolbar_nav_id
     }
 
     private fun initProgressBar(){
         //初始化
         mProgressParams = LayoutParams(context.dp2px(25),context.dp2px(25))
-        mProgressParams.addRule(RelativeLayout.CENTER_VERTICAL)
+        mProgressParams?.addRule(RelativeLayout.CENTER_VERTICAL)
         var leftMargin: Int = context.dp2px(10)
-        if (mNavImageButton.visibility == View.VISIBLE){
+        if (mNavImageButton?.visibility == View.VISIBLE){
             leftMargin = context.dp2px(45)
         }
-        mProgressParams.leftMargin = leftMargin
+        mProgressParams?.leftMargin = leftMargin
         mProgressBar = ProgressBar(context)
-        mProgressBar.layoutParams = mProgressParams
+        mProgressBar?.layoutParams = mProgressParams
         addView(mProgressBar)
-        mProgressBar.visibility = if (mShowProgressBar) View.VISIBLE else View.GONE
-        mProgressBar.id = R.id.toolbar_progress_id
-        mProgressBar.indeterminateTintList = ColorStateList.valueOf(Color.WHITE)
+        mProgressBar?.visibility = if (mShowProgressBar) View.VISIBLE else View.GONE
+        mProgressBar?.id = R.id.toolbar_progress_id
+        mProgressBar?.indeterminateTintList = ColorStateList.valueOf(Color.WHITE)
 
     }
 
@@ -435,69 +431,69 @@ open class ProgressToolbar : RelativeLayout{
         //初始化
         mTitleParams = LayoutParams(LayoutParams.WRAP_CONTENT,mHeight)
         if (mTitleGravity == Gravity.CENTER){
-            mTitleParams.addRule(RelativeLayout.CENTER_IN_PARENT)
+            mTitleParams?.addRule(RelativeLayout.CENTER_IN_PARENT)
         }else{
-            mTitleParams.addRule(RelativeLayout.CENTER_VERTICAL)
-            if (mNavImageButton.visibility == View.VISIBLE && mProgressBar.visibility == View.VISIBLE){
-                mTitleParams.leftMargin = context.dp2px(80)
-            }else if (mNavImageButton.visibility == View.VISIBLE || mProgressBar.visibility == View.VISIBLE){
-                mTitleParams.leftMargin = context.dp2px(45)
+            mTitleParams?.addRule(RelativeLayout.CENTER_VERTICAL)
+            if (mNavImageButton?.visibility == View.VISIBLE && mProgressBar?.visibility == View.VISIBLE){
+                mTitleParams?.leftMargin = context.dp2px(80)
+            }else if (mNavImageButton?.visibility == View.VISIBLE || mProgressBar?.visibility == View.VISIBLE){
+                mTitleParams?.leftMargin = context.dp2px(45)
             }else{
-                mTitleParams.leftMargin = context.dp2px(10)
+                mTitleParams?.leftMargin = context.dp2px(10)
             }
         }
 
         mTitle = AppCompatTextView(context)
-        mTitle.layoutParams = mTitleParams
-        mTitle.maxWidth = context.dp2px(160)
-        mTitle.setSingleLine()
-        mTitle.ellipsize = TextUtils.TruncateAt.END
-        mTitle.gravity = Gravity.CENTER
-        mTitle.setTextColor(mTitleTextColor)
-        mTitle.textSize = mTitleTextSize
-        mTitle.paint.isFakeBoldText = mTItleBoldStyle
-        mTitle.text = mTitleText
+        mTitle?.layoutParams = mTitleParams
+        mTitle?.maxWidth = context.dp2px(160)
+        mTitle?.setSingleLine()
+        mTitle?.ellipsize = TextUtils.TruncateAt.END
+        mTitle?.gravity = Gravity.CENTER
+        mTitle?.setTextColor(mTitleTextColor)
+        mTitle?.textSize = mTitleTextSize
+        mTitle?.paint?.isFakeBoldText = mTitleBoldStyle
+        mTitle?.text = mTitleText
         addView(mTitle)
 
-        mTitle.id = R.id.toolbar_title_id
+        mTitle?.id = R.id.toolbar_title_id
 
     }
 
     private fun initMenu(){
         mMenuParams = LayoutParams(context.dp2px(25),context.dp2px(25))
-        mMenuParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-        mMenuParams.addRule(RelativeLayout.CENTER_VERTICAL)
-        mMenuParams.rightMargin = context.dp2px(10)
+        mMenuParams?.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+        mMenuParams?.addRule(RelativeLayout.CENTER_VERTICAL)
+        mMenuParams?.rightMargin = context.dp2px(10)
         mMenu = AppCompatImageButton(context)
-        mMenu.layoutParams = mMenuParams
-        mMenu.setBackgroundResource(R.drawable.ripple_circle_bg)
-        mMenu.isClickable = true
+        mMenu?.layoutParams = mMenuParams
+        mMenu?.setBackgroundResource(R.drawable.ripple_circle_bg)
+        mMenu?.isClickable = true
         addView(mMenu)
-        mMenu.visibility = if(mShowMenu) View.VISIBLE else View.GONE
+        mMenu?.visibility = if(mShowMenu) View.VISIBLE else View.GONE
         mMenuDrawable.run {
             this?.setBounds(0,0,this.intrinsicWidth,this.intrinsicHeight)
-            mMenu.setImageDrawable(mMenuDrawable)
+            mMenu?.setImageDrawable(mMenuDrawable)
         }
-        mMenu.id = R.id.toolbar_menu_id
+        mMenu?.id = R.id.toolbar_menu_id
 
     }
 
     private fun initMenuGroup(){
         mMenuGroupParams = LayoutParams(LayoutParams.WRAP_CONTENT,context.dp2px(25))
-        mMenuGroupParams.addRule(RelativeLayout.CENTER_VERTICAL)
-        mMenuGroupParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+        mMenuGroupParams?.addRule(RelativeLayout.CENTER_VERTICAL)
+        mMenuGroupParams?.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
         var rightMargin: Int = context.dp2px(10)
-        if (mMenu.visibility == View.VISIBLE){
+        if (mMenu?.visibility == View.VISIBLE){
             rightMargin = context.dp2px(40)
         }
-        mMenuGroupParams.rightMargin = rightMargin
+        mMenuGroupParams?.rightMargin = rightMargin
 
         mMenuGroup = LinearLayout(context)
-        mMenuGroup.layoutParams = mMenuGroupParams
-        mMenuGroup.id = R.id.toolbar_menu_group_id
+        mMenuGroup?.layoutParams = mMenuGroupParams
+        mMenuGroup?.id = R.id.toolbar_menu_group_id
 
-        mMenuGroup.orientation = LinearLayout.HORIZONTAL
-        mMenuGroup.gravity = Gravity.CENTER
+        mMenuGroup?.orientation = LinearLayout.HORIZONTAL
+        mMenuGroup?.gravity = Gravity.CENTER
 
         addView(mMenuGroup)
     }
