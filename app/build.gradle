@@ -22,6 +22,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation rootProject.ext.junit
     androidTestImplementation rootProject.ext.android_test
     androidTestImplementation rootProject.ext.espresso_core

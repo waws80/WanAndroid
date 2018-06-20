@@ -8,17 +8,10 @@
     tools:context=".MainActivity">
 
 
-    <com.thanatos.baselibrary.widget.ProgressToolbar
-        android:id="@+id/main_toolbar"
-        app:toolbarShowNav="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <com.thanatos.baselibrary.widget.TestView
-        android:id="@+id/testView"
-        android:layout_width="match_parent"
-        android:layout_height="100dp" />
-
+    <Button
+        android:onClick="a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
 

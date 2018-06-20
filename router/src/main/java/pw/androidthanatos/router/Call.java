@@ -101,6 +101,11 @@ public final class Call {
         int code = 404;
         String msg = "";
         if (path != null && !path.isEmpty()) {
+            if (!path.startsWith("/")){
+                msg = "path 开头必须添加    /";
+                code = 400;
+                return buildResponse(code,path,action,msg);
+            }
             Class<? extends Activity> target = this.tabs.get(path);
             if (target == null){
                 msg = "目标页面没有找到! path = "+path;

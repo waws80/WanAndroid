@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
+import android.os.Handler
+import android.support.annotation.DrawableRes
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +16,12 @@ import android.view.WindowManager
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.thanatos.baselibrary.base.BaseApplication
+import com.thanatos.baselibrary.thread.ThreadManager
+import com.thanatos.baseres.R
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
+import java.io.File
 
 /**
  * 设置状态栏（仅适用于使用v7包下的ToolBar页面）
@@ -50,6 +56,11 @@ fun  Activity.setStatusBar(color: Int = Color.argb(180,0,0,0), lightMode: Boolea
         }
     }
 }
+
+fun Activity.handler(): Handler{
+    return ThreadManager.handler
+}
+
 
 /**
  * 获取状态栏高度
@@ -98,8 +109,8 @@ fun Context.px2sp(px: Int): Int{
  * iv.circle("http://img.zcool.cn/community/01664d5867d034a801219c77c8d449.gif",dp2px(50))
  */
 fun ImageView.circle(url: String){
-
-    Glide.with(this).load(url)
+    Glide.with(this)
+            .load(url)
             .apply(RequestOptions.circleCropTransform())
             .into(this)
 
@@ -110,7 +121,22 @@ fun ImageView.circle(url: String){
  * iv.roundRect("http://img.zcool.cn/community/01664d5867d034a801219c77c8d449.gif",dp2px(50))
  */
 fun ImageView.roundRect(url: String,round: Int = 18){
+    setImageDrawable(resources.getDrawable(R.drawable.ic_icon_picture_empty))
     Glide.with(this).load(url)
             .apply(RequestOptions.bitmapTransform(RoundedCornersTransformation(round,0)))
             .into(this)
 }
+
+fun ImageView.withRes(@DrawableRes id: Int, round: Int = 18){
+    Glide.with(this).load(id)
+            .apply(RequestOptions.bitmapTransform(RoundedCornersTransformation(round,0)))
+            .into(this)
+}
+
+fun downloadImage(url: String): File{
+    val future = Glide.with(BaseApplication.getContext())
+            .load(url)
+            .downloadOnly(800,800)
+    return  future.get()
+}
+

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SplishActivity">
+
+    <ImageView
+        android:id="@+id/splishView"
+        android:scaleType="fitCenter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".SplishActivity">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/tv_jump"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_splish_jump_bg"
+        android:layout_width="70dp"
+        android:layout_height="30dp" />
+
+</RelativeLayout>

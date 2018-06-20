@@ -113,6 +113,9 @@ public final class Router {
      * @param path activity定义的path
      */
     public Response path(@NonNull String path){
+        if (!path.startsWith("/")){
+            RouterLog.d("path 开头必须添加    /");
+        }
         Request request = new Request.Builder(checkInit(wrf.get())).path(path).build();
        return newCall(request).execute();
     }

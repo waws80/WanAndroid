@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.support.annotation.DrawableRes
+import android.support.transition.Slide
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -62,9 +64,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * 初始化空view
      */
     private fun initErrorView(){
-        val toolbar = ProgressToolbar(this)
-        toolbar.setNavClickListener { onBackPressed() }
-        findViewById<ViewGroup>(R.id.base_empty).addView(toolbar,0)
+        findViewById<Toolbar>(R.id.toolbar_empty).setNavigationOnClickListener { onBackPressed() }
         findViewById<View>(R.id.tv_empty_content).setOnClickListener { onErrorTextViewClick() }
     }
 
@@ -96,7 +96,7 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * 显示进度条
      */
-    protected fun showProgress(text: String = resources.getString(R.string.app_loading)){
+    protected fun showProgressDialog(text: String = resources.getString(R.string.app_loading)){
         checkContentView()
         findViewById<View>(R.id.base_progress).visibility = View.VISIBLE
         findViewById<TextView>(R.id.tv_progress).text = text
@@ -105,7 +105,7 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * 隐藏进度条
      */
-    protected fun hideProgress(){
+    protected fun hideProgressDialog(){
         checkContentView()
         findViewById<View>(R.id.base_progress).visibility = View.GONE
     }
@@ -131,8 +131,15 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * 日志
      */
-    protected fun log(msg: String, tag: String = "WanAndroid") {
+    protected open fun log(msg: String, tag: String = "WanAndroid") {
         Log.d(tag, msg)
+    }
+
+    protected fun toast(text: String, duration: Int = Toast.LENGTH_SHORT,
+                        @Slide.GravityFlag gravity: Int, x: Int = 0, y: Int = 0){
+        val toast = Toast.makeText(applicationContext,text,duration)
+        toast.setGravity(gravity,x,y)
+        toast.show()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

@@ -16,9 +16,9 @@ import java.util.concurrent.TimeUnit;
  */
 public final class RouterThreadPool {
 
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private static Handler handler = new Handler(Looper.getMainLooper());
 
-    private ExecutorService service =
+    private static ExecutorService service =
             new ThreadPoolExecutor(2,2,0L,TimeUnit.MILLISECONDS,
                     new LinkedBlockingQueue<Runnable>(),new ThreadPoolExecutor.CallerRunsPolicy());
 
