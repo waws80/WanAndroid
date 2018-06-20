@@ -68,7 +68,7 @@ abstract class BaseActivity : AppCompatActivity() {
         findViewById<View>(R.id.tv_empty_content).setOnClickListener { onErrorTextViewClick() }
     }
 
-    protected fun onErrorTextViewClick(){}
+    protected open fun onErrorTextViewClick(){}
 
     @SuppressLint("WrongViewCast")
     protected fun getErrorTextView(): TextView{
@@ -113,7 +113,7 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * 设置底部导航栏颜色
      */
-    protected fun setNavigationColor(color: Int = Color.argb(60,0,0,0)){
+    protected fun setNavigationColor(color: Int = resources.getColor(R.color.colorPrimary)){
         window.clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.navigationBarColor = color
     }

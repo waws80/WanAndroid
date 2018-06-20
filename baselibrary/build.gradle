@@ -17,6 +17,9 @@ android {
         //自定义变量
         buildConfigField 'boolean','APP_DEBUG','true'
 
+        //程序基本文章url
+        buildConfigField 'String', 'APP_BASE_URL_ARTICLE', '"http://www.wanandroid.com/"'
+
     }
 
     buildTypes {

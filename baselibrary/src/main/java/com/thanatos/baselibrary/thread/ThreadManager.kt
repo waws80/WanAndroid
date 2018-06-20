@@ -11,13 +11,9 @@ import java.util.concurrent.Executors
  *  @createTime: 2018/6/20
  *  @updateTime: 2018/6/20 16:06
  */
-class ThreadManager {
+object ThreadManager {
 
-    companion object {
+    val handler = Handler(Looper.getMainLooper())
 
-        val handler = Handler(Looper.getMainLooper())
-
-        val thread = Executors.newFixedThreadPool(6)
-
-    }
+    val thread = Executors.newFixedThreadPool(6)
 }
