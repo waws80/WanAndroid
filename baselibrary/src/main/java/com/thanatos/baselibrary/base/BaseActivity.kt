@@ -1,7 +1,6 @@
 package com.thanatos.baselibrary.base
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.support.annotation.DrawableRes
 import android.support.transition.Slide
@@ -16,7 +15,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.thanatos.baselibrary.R
-import com.thanatos.baselibrary.widget.ProgressToolbar
 
 /**
  *  功能描述: activity基类

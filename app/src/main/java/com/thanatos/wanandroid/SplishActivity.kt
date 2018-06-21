@@ -2,6 +2,7 @@ package com.thanatos.wanandroid
 
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.text.Html
 import android.widget.ImageView
 import android.widget.TextView
@@ -46,6 +47,8 @@ class SplishActivity : BaseActivity() {
             Router.getInstance().path("/app_main")
             finish()
         })
+        val dialog = AlertDialog.Builder(this)
+
     }
 
     override fun onDestroy() {

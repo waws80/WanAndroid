@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_base_dialog_bg"
+    android:elevation="12dp"
+    android:paddingLeft="24dp"
+    android:paddingTop="24dp"
+    android:paddingRight="24dp"
+    android:paddingBottom="16dp">
+
+    <!--自定义dialog icon-->
+    <ImageView
+        android:id="@+id/iv_base_dialog_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@mipmap/ic_launcher_round" />
+
+    <!--自定义dialog标题-->
+    <TextView
+        android:id="@+id/tv_base_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/textColor"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/iv_base_dialog_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginLeft="0dp"
+        tools:text="权限申请" />
+
+    <!--自定义dialog文本-->
+    <TextView
+        android:id="@+id/tv_base_dialog_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:lineSpacingExtra="6dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_base_dialog_title"
+        app:layout_goneMarginTop="0dp"
+        tools:text="这个APP想要申请使用你手机的定位权限，请问你是否同意申请！！！！" />
+
+    <!--自定义dialog取消按钮-->
+    <TextView
+        android:id="@+id/tv_base_dialog_cancel"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/ripple_base_dialog_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="取消"
+        android:textColor="@color/secondTextColor"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_base_dialog_submit"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_base_dialog_content" />
+
+    <!--自定义dialog确定按钮-->
+    <TextView
+        android:id="@+id/tv_base_dialog_submit"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/ripple_base_dialog_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="确定"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@+id/tv_base_dialog_cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_base_dialog_content" />
+
+
+</android.support.constraint.ConstraintLayout>
