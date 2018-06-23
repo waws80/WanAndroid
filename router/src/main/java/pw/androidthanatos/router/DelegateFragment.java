@@ -50,7 +50,19 @@ public class DelegateFragment extends Fragment {
         RouterLog.d(" DelegateFragment : onPause:");
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RouterLog.d(" DelegateFragment : onDestroy:"+this);
+        if (getActivity() == null){
+            return;
+        }
+        if (getActivity().getFragmentManager() == null){
+            return;
+        }
+        FragmentTransaction transaction = getActivity().getFragmentManager().beginTransaction();
+        transaction.remove(this).commit();
+    }
 
     public void setCallBack(ResultCallBack callBack) {
        this.callBack = callBack;

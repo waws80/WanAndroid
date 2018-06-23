@@ -1,4 +1,4 @@
-package com.thanatos.mine.mine.mvp
+package com.thanatos.mine.mine.login.mvp
 
 import com.thanatos.baselibrary.RegexUtil
 import com.thanatos.baselibrary.ext.isEmpty
@@ -11,7 +11,7 @@ import com.thanatos.baselibrary.mvp.BasePresenter
  *  @createTime: 2018/6/22
  *  @updateTime: 2018/6/22 16:01
  */
-class LoginPresenter : BasePresenter<LoginView>(), ILoginPresenter{
+class LoginPresenter : BasePresenter<LoginView>(), ILoginPresenter {
 
     //懒加载实例化mnodel
     private val mLoginModel: LoginModel by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {

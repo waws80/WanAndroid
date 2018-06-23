@@ -14,6 +14,11 @@ interface ArticleService {
     @FormUrlEncoded
     fun login(@FieldMap table: HashMap<String, String>): Observable<Any>
 
+    //用户注册
+    @POST("user/register")
+    @FormUrlEncoded
+    fun register(@FieldMap table: HashMap<String, String>): Observable<Any>
+
     //首页---------------------------------
 
     //首页轮播图

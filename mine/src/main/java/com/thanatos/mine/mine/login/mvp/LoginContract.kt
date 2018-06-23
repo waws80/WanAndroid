@@ -1,4 +1,4 @@
-package com.thanatos.mine.mine.mvp
+package com.thanatos.mine.mine.login.mvp
 
 import android.support.annotation.NonNull
 import com.thanatos.baselibrary.mvp.BaseView

@@ -251,7 +251,10 @@ public final class Call {
             FragmentManager manager = ((FragmentActivity) activity).getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
             //new DelegateFragmentV4();
-            DelegateFragmentV4 fragment = FragmentFactory.getDefault().getV4();
+            DelegateFragmentV4 fragment = (DelegateFragmentV4) manager.findFragmentByTag("RouterFragment");
+            if (fragment == null){
+                fragment = FragmentFactory.getDefault().getV4();
+            }
             fragment.setCallBack(mRequest.callBack());
             fragment.setArguments(buildBund(intent));
             transaction.add(fragment,"RouterFragment").commit();
@@ -259,7 +262,10 @@ public final class Call {
         }else {
             android.app.FragmentTransaction transaction = activity.getFragmentManager().beginTransaction();
             //new DelegateFragment();
-            DelegateFragment fragment = FragmentFactory.getDefault().get();
+            DelegateFragment fragment = (DelegateFragment) activity.getFragmentManager().findFragmentByTag("RouterFragment");
+            if (fragment == null){
+                fragment = FragmentFactory.getDefault().get();
+            }
             fragment.setCallBack(mRequest.callBack());
             fragment.setArguments(buildBund(intent));
             transaction.add(fragment,"RouterFragment").commit();

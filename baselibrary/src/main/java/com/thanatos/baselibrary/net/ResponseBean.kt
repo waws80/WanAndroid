@@ -29,7 +29,7 @@ data class IndexBannerBean(val desc: String,
                            val url: String)
 
 //用户信息实体类
-data class UserBean(val username: String, val password: String)
+data class UserBean(val username: String, val password: String, val id: String)
 
 
 

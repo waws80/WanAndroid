@@ -54,7 +54,16 @@ public class DelegateFragmentV4 extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RouterLog.d(" DelegateFragmentV4 : onDestroy:");
+        RouterLog.d(" DelegateFragmentV4 : onDestroy:"+this);
+        if (getActivity() == null){
+            return;
+        }
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        if (manager == null){
+            return;
+        }
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.remove(this).commit();
     }
 
     public void setCallBack(ResultCallBack callBack) {
@@ -64,7 +73,7 @@ public class DelegateFragmentV4 extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        RouterLog.d("DelegateFragmentV4: onActivityResult:"+resultCode+"\ndata:"+data.toString());
+        RouterLog.d("DelegateFragmentV4: onActivityResult:"+resultCode);
         if (mRequestCode != -1 && mRequestCode == requestCode){
             callBack.next(resultCode, data);
         }

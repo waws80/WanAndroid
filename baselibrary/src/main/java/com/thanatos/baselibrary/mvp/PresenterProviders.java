@@ -39,10 +39,8 @@ public class PresenterProviders {
     @MainThread
     public static PresenterProvider ofActivity(@NonNull FragmentActivity activity){
         String key = activity.getClass().getSimpleName();
-        if (!sPresenterTables.containsKey(key)){
-            PresenterProvider provider = buildProvider(activity);
-            sPresenterTables.put(activity.getClass().getSimpleName(),provider);
-        }
+        sPresenterTables.put(activity.getClass().getSimpleName(),
+                buildProvider(activity));
         return sPresenterTables.get(key);
     }
 
@@ -57,10 +55,8 @@ public class PresenterProviders {
             throw new NullPointerException("activity is destroy for window");
         }
         String key = fragment.getActivity().getClass().getSimpleName();
-        if (!sPresenterTables.containsKey(key)){
-            PresenterProvider provider = buildProvider(fragment.getActivity());
-            sPresenterTables.put(fragment.getActivity().getClass().getSimpleName(),provider);
-        }
+        sPresenterTables.put(fragment.getActivity().getClass().getSimpleName(),
+                buildProvider(fragment.getActivity()));
         return sPresenterTables.get(key);
     }
 

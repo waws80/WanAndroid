@@ -19,8 +19,7 @@ public final class DispatcherActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Uri uri = intent.getData();
         RouterLog.d(uri.toString());
-        String path = ""+uri.getPath().replace("/","");
-        Request.Builder builder = new Request.Builder(this.getApplicationContext()).path(path);
+        Request.Builder builder = new Request.Builder(this.getApplicationContext()).path(uri.getPath());
         for (String name:uri.getQueryParameterNames()) {
             String value = uri.getQueryParameter(name);
             RouterLog.d("key: "+name+"    value: "+value);

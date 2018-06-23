@@ -1,17 +1,19 @@
-package com.thanatos.mine.mine
+package com.thanatos.mine.mine.login
 
+import android.app.Activity
+import android.app.ActivityOptions
 import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import com.thanatos.baselibrary.ext.setStatusBar
 import com.thanatos.baselibrary.mvp.BaseMvpActivity
 import com.thanatos.mine.R
-import com.thanatos.mine.mine.mvp.LoginPresenter
-import com.thanatos.mine.mine.mvp.LoginView
+import com.thanatos.mine.mine.login.mvp.LoginPresenter
+import com.thanatos.mine.mine.login.mvp.LoginView
 import kotlinx.android.synthetic.main.mine_activity_login.*
 import pw.androidthanatos.annotation.Path
+import pw.androidthanatos.router.Request
+import pw.androidthanatos.router.Router
 
 /**
  *  功能描述: 登录、注册页面
@@ -21,10 +23,10 @@ import pw.androidthanatos.annotation.Path
  *  @updateTime: 2018/6/22 15:40
  */
 @Path("/mine/login")
-class LoginActivity : BaseMvpActivity<LoginView,LoginPresenter>(), LoginView {
+class LoginActivity : BaseMvpActivity<LoginView, LoginPresenter>(), LoginView {
 
-    override fun getPresenter(): Class<LoginPresenter> {
-        return LoginPresenter::class.java
+    override fun getPresenter(): LoginPresenter {
+        return LoginPresenter()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +60,19 @@ class LoginActivity : BaseMvpActivity<LoginView,LoginPresenter>(), LoginView {
      * 注册
      */
     fun click_register(view: View){
-        showSnackBar("注册")
+        val request = Request.Builder(this)
+                .path("/mine/register")
+                .addOption(ActivityOptions.makeSceneTransitionAnimation(this,btn_login,
+                        "btn").toBundle())
+                .responseCode(100)
+                .resultCallBack { resultCode, data ->
+                    if (resultCode == Activity.RESULT_OK){
+                        setResult(Activity.RESULT_OK)
+                        onBackPressed()
+                    }
+                }
+                .build()
+        Router.getInstance().newCall(request).execute()
     }
 
     //数据回调--------------------------------

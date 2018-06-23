@@ -51,7 +51,7 @@ object SpUtil{
             value is String -> edit.putString(key, value as String)
             value is String -> edit.putStringSet(key, value as MutableSet<String>)
             else -> {
-                throw IllegalArgumentException("不支持的类型")
+                edit.putString(key,value as String)
             }
         }
         edit.apply()

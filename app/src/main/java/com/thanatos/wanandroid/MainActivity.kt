@@ -1,5 +1,7 @@
 package com.thanatos.wanandroid
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.transition.Explode
 import android.transition.Fade
@@ -9,18 +11,18 @@ import android.view.Window
 import com.thanatos.baselibrary.mvp.BaseMvpActivity
 import com.thanatos.baselibrary.mvp.BaseView
 import pw.androidthanatos.annotation.Path
+import pw.androidthanatos.router.DispatcherActivity
 import pw.androidthanatos.router.Router
 
-@Path("/app_main")
+@Path("/app/main")
 class MainActivity : BaseMvpActivity<BaseView,TestPresenter>() {
 
-    override fun getPresenter(): Class<TestPresenter> {
-        return TestPresenter::class.java
+    override fun getPresenter(): TestPresenter {
+        return TestPresenter()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
         val fade = Fade()
         fade.duration = 500
         window.enterTransition = fade
@@ -34,7 +36,11 @@ class MainActivity : BaseMvpActivity<BaseView,TestPresenter>() {
 
     fun a(view: View){
 
-        Router.getInstance().path("/mine/login")
+        //Router.getInstance().path("/mine/login")
+        val intent = Intent(this,DispatcherActivity::class.java)
+        intent.data = Uri.parse("router://thanatos.wanandroid/mine/login?a=1&b=true")
+        startActivity(intent)
+        //Router.getInstance().uri("router://thanatos.wanandroid/main/login?a=1&b=true")
     }
 
 

@@ -44,7 +44,7 @@ class MvpLifeCallBack {
             //若当前activity已经添加入provider则进行生命周期绑定
             if (PresenterProviders.sPresenterTables.containsKey(activity.getClass().getSimpleName())){
                 PresenterLifeCallBack callBack = PresenterProviders.sPresenterTables.get(activity.getClass().getSimpleName()).getHolderCallBack();
-                if (callBack != null){
+                if (callBack != null && !callBack.visible()){
                     callBack.onStart();
                 }
             }

@@ -28,7 +28,7 @@ abstract class BaseMvpActivity<V: BaseView, P: BasePresenter<V>> : BaseActivity(
 
     }
 
-    abstract fun getPresenter() : Class<P>
+    abstract fun getPresenter() : P
 
     override fun showProgress(@NonNull text: String) {
         showProgressDialog(text)

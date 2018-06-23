@@ -24,15 +24,14 @@ public class PresenterProvider {
 
     /**
      * 获取当前活动页面对应的presenter
-     * @param clazz
+     * @param presenter
      * @param <P>
      * @return
      */
     @MainThread
     @Nullable
-    public <P extends BasePresenter> P get(@NonNull Class<P> clazz){
+    public <P extends BasePresenter> P get(@NonNull P presenter){
         try {
-            P presenter = clazz.newInstance();
             if (null == this.presenter){
                 this.presenter = presenter;
             }
