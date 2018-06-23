@@ -79,5 +79,33 @@
         <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
         <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
     </style>
+    
+    <declare-styleable name="Banner">
+        <!--指示器普通样式-->
+        <attr name="indicator_normal" format="reference"/>
+        <!--指示器选中样式-->
+        <attr name="indicator_selector" format="reference"/>
+        <!--指示器位置-->
+        <attr name="indicator_gravity" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right" value="2"/>
+        </attr>
+        <!--指示器容器背景颜色-->
+        <attr name="indicator_background" format="color|reference"/>
+        <!--指示器容器高度-->
+        <attr name="indicator_height" format="dimension|reference"/>
+        <!--轮播图间隔-->
+        <attr name="interval" format="integer"/>
+        <!--自动轮播-->
+        <attr name="autoStart" format="boolean"/>
+        <!--图片显示类型-->
+        <attr name="scaleType" format="enum">
+            <enum name="fitXY" value="0"/>
+            <enum name="fitCenter" value="1"/>
+            <enum name="center" value="2"/>
+            <enum name="centerCrop" value="3"/>
+        </attr>
+    </declare-styleable>
 
 </resources>

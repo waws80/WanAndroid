@@ -29,4 +29,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <com.thanatos.baselibrary.image.Banner
+        android:background="@mipmap/login_bg"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="120dp"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"/>
+
+    <ImageView
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </android.support.constraint.ConstraintLayout>
