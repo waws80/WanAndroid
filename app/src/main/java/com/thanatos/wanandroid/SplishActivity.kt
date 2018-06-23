@@ -1,5 +1,6 @@
 package com.thanatos.wanandroid
 
+import android.app.ActivityOptions
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -11,6 +12,7 @@ import com.thanatos.baselibrary.ext.setStatusBar
 import com.thanatos.baselibrary.ext.withRes
 import com.thanatos.baselibrary.sputil.SpUtil
 import com.thanatos.baselibrary.timer.CountDownTimerUtils
+import pw.androidthanatos.router.Request
 import pw.androidthanatos.router.Router
 
 /**
@@ -27,8 +29,10 @@ class SplishActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splish)
-
+        //设置状态栏
         setStatusBar(Color.WHITE,true)
+        //设置导航栏
+        setNavigationColor(Color.argb(30,0,0,0))
         findViewById<ImageView>(R.id.splishView)
                 .withRes(com.thanatos.baseres.R.mipmap.splish_bg)
 
@@ -37,6 +41,7 @@ class SplishActivity : BaseActivity() {
         tv.setOnClickListener {
             Router.getInstance().path("/app_main")
             finish()
+            overridePendingTransition(android.R.anim.fade_in,0)
         }
 
         mCountDownTimerUtils = CountDownTimerUtils.getInstance()
@@ -46,8 +51,10 @@ class SplishActivity : BaseActivity() {
         },{
             Router.getInstance().path("/app_main")
             finish()
+            overridePendingTransition(android.R.anim.fade_in,0)
         })
-        val dialog = AlertDialog.Builder(this)
+
+
 
     }
 

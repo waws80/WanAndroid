@@ -1,5 +1,6 @@
 package com.thanatos.baselibrary.data
 
+import com.thanatos.baselibrary.ext.printLog
 import com.thanatos.baselibrary.gson.GsonUtil
 import com.thanatos.baselibrary.net.ArticleService
 import com.thanatos.baselibrary.net.HttpCallBack
@@ -10,13 +11,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
-object RemoteData{
+class RemoteData private constructor(){
 
-    val articleData = ArticleData()
+    companion object {
+        /**
+         * 获取当前类唯一实类对象
+         */
+        fun getInstance() = RemoteData()
+    }
+
+    public val articleData = ArticleData()
 
     abstract class AbsData{
 
-        open fun apiObservable(observable: Observable<Any>): Observable<Any> =
+        protected open fun apiObservable(observable: Observable<Any>): Observable<Any> =
             observable.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
 
@@ -26,6 +34,7 @@ object RemoteData{
 
         private val mServicer = HttpManager.getRetrofit().create(ArticleService::class.java)
 
+        //获取首页轮播图
         fun getIndexBanner(){
 
              apiObservable(mServicer.getIndexBanner())
@@ -34,10 +43,22 @@ object RemoteData{
                          val list = GsonUtil.fromList(data,IndexBannerBean::class.java)
                          print(list)
                      }))
+        }
 
+        //进行登录操作
+        fun login(account: String, password: String, next:(Boolean, String) -> Unit){
+            val table = HashMap<String, String>()
+            table["username"] = account
+            table["password"] = password
+            apiObservable(mServicer.login(table))
+                    .subscribe(HttpCallBack.getInstance().callBack { any, responseException ->
+                        if (responseException.isSuccessful()){
+                            //保存用户信息
+                            printLog(any)
+                        }
+                        next.invoke(responseException.isSuccessful(),responseException.msg)
 
-
-
+                    })
         }
 
     }

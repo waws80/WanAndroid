@@ -18,7 +18,7 @@ public interface PresenterLifeCallBack<V extends BaseView>{
     /**
      * 当前presenter已创建{@link BasePresenter}
      */
-    void onCreate();
+    void onStart();
 
     /**
      * 当前presenter已挂起{@link BasePresenter}
@@ -29,5 +29,7 @@ public interface PresenterLifeCallBack<V extends BaseView>{
      * 当前presenter已销毁{@link BasePresenter}
      */
     void onDestroy();
+
+    boolean visible();
 
 }

@@ -16,9 +16,18 @@ object GsonUtil {
 
     fun toJson(value: Any) = gson.toJson(value)
 
-    fun fromObject(@NonNull json: Any, clazz: Class<Any>) = gson.fromJson(gson.toJson(json),clazz)
+    fun <D> fromObject(@NonNull json: Any?, clazz: Class<D>) : D{
+        return if (json == null){
+            clazz.newInstance()
+        }else{
+            gson.fromJson(gson.toJson(json),clazz)
+        }
+    }
 
-    fun <D> fromList(@NonNull json: Any, clazz: Class<D>): MutableList<D>{
+    fun <D> fromList(@NonNull json: Any?, clazz: Class<D>): MutableList<D>{
+        if (json == null){
+            return mutableListOf()
+        }
         try {
             val array = JsonParser().parse(gson.toJson(json)).asJsonArray
             val list = mutableListOf<D>()

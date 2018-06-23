@@ -12,6 +12,9 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
 
+        //所有资源必须以此 mine_ 开头，否则会报错
+        resourcePrefix "mine_"
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -26,6 +29,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation rootProject.ext.junit
     androidTestImplementation rootProject.ext.android_test
     androidTestImplementation rootProject.ext.espresso_core

@@ -24,7 +24,7 @@
     <color name="colorControlHighlight">#757575</color>
 
     <!--控件不可按颜色-->
-    <color name="colorControlDisable">#BDBDBD</color>
+    <color name="colorControlDisable">#90ADBB</color>
 
     <!--控件选中颜色-->
     <color name="colorControlActivated">#607D8B</color>

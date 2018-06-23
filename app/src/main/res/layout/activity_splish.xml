@@ -8,8 +8,16 @@
     tools:context=".SplishActivity">
 
     <ImageView
+        android:scaleType="fitStart"
+        android:layout_marginTop="56dp"
+        android:src="@mipmap/login_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
         android:id="@+id/splishView"
-        android:scaleType="fitCenter"
+        android:scaleType="fitStart"
+        android:layout_marginTop="300dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".SplishActivity">
@@ -18,6 +26,7 @@
     <TextView
         android:id="@+id/tv_jump"
         android:gravity="center"
+        android:clickable="true"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:layout_alignParentRight="true"

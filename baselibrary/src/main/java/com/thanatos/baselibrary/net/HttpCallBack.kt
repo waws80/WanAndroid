@@ -10,9 +10,9 @@ class HttpCallBack : Observer<Any>{
         fun getInstance() = HttpCallBack()
     }
 
-    private lateinit var _next: (Any, ResponseException) -> Unit
+    private lateinit var _next: (Any?, ResponseException) -> Unit
 
-    fun callBack(next: (Any,ResponseException) -> Unit): HttpCallBack{
+    fun callBack(next: (Any?,ResponseException) -> Unit): HttpCallBack{
         _next = next
 
         return this

@@ -1,12 +1,15 @@
 package com.thanatos.wanandroid
 
 import android.os.Bundle
+import android.transition.Explode
+import android.transition.Fade
+import android.transition.Slide
 import android.view.View
-import com.thanatos.baselibrary.data.RemoteData
+import android.view.Window
 import com.thanatos.baselibrary.mvp.BaseMvpActivity
 import com.thanatos.baselibrary.mvp.BaseView
-import com.thanatos.baselibrary.widget.dialog.BaseDialog
 import pw.androidthanatos.annotation.Path
+import pw.androidthanatos.router.Router
 
 @Path("/app_main")
 class MainActivity : BaseMvpActivity<BaseView,TestPresenter>() {
@@ -17,23 +20,21 @@ class MainActivity : BaseMvpActivity<BaseView,TestPresenter>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+        val fade = Fade()
+        fade.duration = 500
+        window.enterTransition = fade
+        window.exitTransition = fade
         setContentView(R.layout.activity_main)
+        //设置导航栏
+        setNavigationColor()
 
-        RemoteData.articleData.getIndexBanner()
+        //RemoteData.articleData.getIndexBanner()
     }
 
     fun a(view: View){
-        BaseDialog(this)
-                .setTitleText("哈哈")
-                .setContent("我是文本内容，哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈")
-                .setCancelButton("cancel",  {
-                    log("cancel")
-                })
-                .setSubmitButton("submit",{
-                    log("submit")
-                })
-                .show()
 
+        Router.getInstance().path("/mine/login")
     }
 
 

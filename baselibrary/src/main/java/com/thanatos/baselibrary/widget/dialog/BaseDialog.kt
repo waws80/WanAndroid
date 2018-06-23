@@ -1,18 +1,16 @@
 package com.thanatos.baselibrary.widget.dialog
 
+import android.animation.Animator
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.annotation.DrawableRes
-import android.support.annotation.LayoutRes
-import android.support.annotation.NonNull
+import android.support.annotation.*
+import android.support.transition.Slide
 import android.text.TextUtils
 import android.util.Log
-import android.view.KeyEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import com.thanatos.baselibrary.BuildConfig
@@ -38,6 +36,14 @@ class BaseDialog : Dialog {
     private var mContent: CharSequence = ""
     private var mCancelText: CharSequence = ""
     private var mSubmitText: CharSequence = ""
+
+    @Slide.GravityFlag
+    private var mGravity: Int = Gravity.CENTER
+
+    @StyleRes
+    private var mAnimation: Int = -1
+
+    private var mAlpha: Float = .3f
 
     //view
     private lateinit var ivIcon: ImageView
@@ -102,11 +108,45 @@ class BaseDialog : Dialog {
         return this
     }
 
+    fun setGravity(@Slide.GravityFlag gravity: Int = Gravity.CENTER): BaseDialog{
+        this.mGravity = gravity
+        if (this.mGravity == Gravity.BOTTOM){
+            this.mAnimation = com.thanatos.baseres.R.style.BaseDialog_Animation_Bottom
+        }
+        return this
+    }
+
+    fun setAnimation(@StyleRes animatorRes: Int = -1 ): BaseDialog{
+        this.mAnimation = animatorRes
+        return this
+    }
+
+    fun setOutSideAlpha(alpha: Float = .3f): BaseDialog{
+        this.mAlpha = alpha
+        if (this.mAlpha < .0f){
+            this.mAlpha = .0f
+        }
+        if (this.mAlpha > 1.0f){
+            this.mAlpha = 1.0f
+        }
+        return this
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (mView == null){
             mView = View.inflate(context, R.layout.base_dialog,null)
         }
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.statusBarColor = Color.TRANSPARENT
+        //设置背景透明度
+        window.setDimAmount(.3f)
+        window.setGravity(this.mGravity)
+        if (mAnimation != -1){
+            window.setWindowAnimations(mAnimation)
+        }
+
         setContentView(mView)
 
         setCancelable(false)
@@ -201,14 +241,14 @@ class BaseDialog : Dialog {
 
     override fun show() {
         super.show()
-        val params = window.attributes
+
         if (mCustom){
+            val params = window.attributes
             params.width = ViewGroup.LayoutParams.MATCH_PARENT
             params.height = ViewGroup.LayoutParams.MATCH_PARENT
             window.decorView.setPadding(0,0,0,0)
             window.attributes = params
         }
-        params.alpha = 1f
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {

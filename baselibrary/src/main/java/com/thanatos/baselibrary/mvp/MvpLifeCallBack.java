@@ -28,7 +28,7 @@ class MvpLifeCallBack {
                 PresenterLifeCallBack callBack = PresenterProviders.sPresenterTables.get(activity.getClass().getSimpleName()).getHolderCallBack();
                 if (callBack != null){
                     callBack.attach((BaseView) activity);
-                    callBack.onCreate();
+                    callBack.onStart();
                 }
             }
             sActivitys.addFirst(activity);
@@ -41,7 +41,13 @@ class MvpLifeCallBack {
 
         @Override
         public void onActivityResumed(Activity activity) {
-
+            //若当前activity已经添加入provider则进行生命周期绑定
+            if (PresenterProviders.sPresenterTables.containsKey(activity.getClass().getSimpleName())){
+                PresenterLifeCallBack callBack = PresenterProviders.sPresenterTables.get(activity.getClass().getSimpleName()).getHolderCallBack();
+                if (callBack != null){
+                    callBack.onStart();
+                }
+            }
         }
 
         @Override

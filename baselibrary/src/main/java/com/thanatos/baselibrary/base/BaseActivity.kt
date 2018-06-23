@@ -112,7 +112,6 @@ abstract class BaseActivity : AppCompatActivity() {
      * 设置底部导航栏颜色
      */
     protected fun setNavigationColor(color: Int = resources.getColor(R.color.colorPrimary)){
-        window.clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.navigationBarColor = color
     }
 
