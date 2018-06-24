@@ -27,6 +27,7 @@ class MvpLifeCallBack {
             if (PresenterProviders.sPresenterTables.containsKey(activity.getClass().getSimpleName())){
                 PresenterLifeCallBack callBack = PresenterProviders.sPresenterTables.get(activity.getClass().getSimpleName()).getHolderCallBack();
                 if (callBack != null){
+                    //noinspection unchecked
                     callBack.attach((BaseView) activity);
                     callBack.onStart();
                 }

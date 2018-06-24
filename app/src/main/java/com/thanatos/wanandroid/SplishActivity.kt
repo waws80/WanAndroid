@@ -39,7 +39,7 @@ class SplishActivity : BaseActivity() {
         val tv = findViewById<TextView>(R.id.tv_jump)
 
         tv.setOnClickListener {
-            Router.getInstance().path("/app_main")
+            Router.getInstance().path("/app/main")
             finish()
             overridePendingTransition(android.R.anim.fade_in,0)
         }
@@ -49,7 +49,7 @@ class SplishActivity : BaseActivity() {
         mCountDownTimerUtils.start({
             tv.text = Html.fromHtml("跳过(<font color ='#455A64'>"+it+"s</font>)")
         },{
-            Router.getInstance().path("/app_main")
+            Router.getInstance().path("/app/main")
             finish()
             overridePendingTransition(android.R.anim.fade_in,0)
         })
