@@ -4,9 +4,6 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
 import android.support.annotation.NonNull
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.PagerSnapHelper
@@ -19,7 +16,6 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.thanatos.baselibrary.R
 import com.thanatos.baselibrary.ext.dp2px
-import com.thanatos.baselibrary.ext.printLog
 import com.thanatos.baselibrary.thread.ThreadManager
 import com.thanatos.baselibrary.timer.CountDownTimerUtils
 
@@ -63,10 +59,17 @@ class Banner  : RelativeLayout {
         LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
     }
 
-    private val mAdapter = BannerAdapter()
+    //适配器
+    private val mAdapter: BannerAdapter by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+        BannerAdapter()
+    }
 
     //轮播图轮询器
     private var timerUtils: CountDownTimerUtils? = CountDownTimerUtils.getInstance()
+
+    var imageLoader: IImageLoader? = null
+
+    var itemClickListener: BannerAdapter.ItemClickListener? = null
 
     constructor(context: Context): this(context, null)
 
@@ -91,6 +94,9 @@ class Banner  : RelativeLayout {
         attrArr.recycle()
     }
 
+    /**
+     * 解析属性
+     */
     private fun parasAttr(attrArr: TypedArray, attr: Int) = when(attr){
         com.thanatos.baseres.R.styleable.Banner_indicator_normal ->
                 mIndicatorNormal = attrArr.getDrawable(attr)
@@ -129,13 +135,6 @@ class Banner  : RelativeLayout {
     //初始化布局
     private fun initUI(){
         //初始化图片
-        mRecyclerView.layoutManager = LinearLayoutManager(context,
-                LinearLayoutManager.HORIZONTAL,false)
-        mRecyclerView.adapter = mAdapter
-        mAdapter.setScaleType(mScaleType)
-        mRecyclerView.scrollToPosition(Int.MAX_VALUE/2)
-        PagerSnapHelper().attachToRecyclerView(mRecyclerView)
-
         mContentParams.addRule(RelativeLayout.CENTER_IN_PARENT)
 
         mRecyclerView.layoutParams = mContentParams
@@ -151,10 +150,12 @@ class Banner  : RelativeLayout {
         mLinearLayout.setPadding(context.dp2px(16),0,context.dp2px(16),0)
         addView(mLinearLayout)
 
-        initRecyclerViewThing()
-
     }
 
+
+    /**
+     * 设置rv的滚动事件和轮播图的轮询
+     */
     private fun initRecyclerViewThing(){
         mRecyclerView.setOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
@@ -167,9 +168,9 @@ class Banner  : RelativeLayout {
                 val position = (mRecyclerView.layoutManager as LinearLayoutManager)
                         .findFirstVisibleItemPosition()
                 val p = position - Int.MAX_VALUE.shr(1)
-                var realPosition = p % mAdapter.getList().size
+                var realPosition = p % mAdapter.data.size
                 if (realPosition < 0){
-                    realPosition += mAdapter.getList().size
+                    realPosition += mAdapter.data.size
                 }
                 if (mIndicatorNormal != null && mIndicatorHeight > 0){
                     for (index in 0 until mLinearLayout.childCount){
@@ -192,7 +193,7 @@ class Banner  : RelativeLayout {
         timerUtils?.setInterval(mInterval/1000)
         ThreadManager.handler.postDelayed({
             timerUtils?.start({
-                if (mScroll && mAdapter.getList().isNotEmpty()){
+                if (mScroll && mAdapter.data.isNotEmpty()){
                     mRecyclerView.smoothScrollToPosition((mRecyclerView.layoutManager as LinearLayoutManager)
                             .findFirstVisibleItemPosition()+1)
                 }
@@ -201,8 +202,12 @@ class Banner  : RelativeLayout {
         },mInterval.toLong())
     }
 
+    /**
+     * 添加数据
+     */
     fun addList(@NonNull list: List<Any> = emptyList()){
-        mAdapter.addList(list)
+        mAdapter.data = list
+        mAdapter.scaleType
         if (list.isNotEmpty() && mIndicatorHeight > 0){
             //添加指示器
             if (mIndicatorNormal != null){
@@ -226,7 +231,9 @@ class Banner  : RelativeLayout {
         }
     }
 
-
+    /**
+     * 手指按下停止轮询 手指抬起重新开始轮询
+     */
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         when(ev.action){
             MotionEvent.ACTION_DOWN ->{
@@ -240,14 +247,39 @@ class Banner  : RelativeLayout {
     }
 
 
-    private fun startScroll(){
+    /**
+     * 开始轮询滚动
+     */
+    fun startScroll(){
         mScroll = true
     }
 
-    private fun stopScroll(){
+    /**
+     * 停止轮询滚动
+     */
+    fun stopScroll(){
         mScroll = false
     }
 
+    /**
+     * 添加到活动窗口
+     */
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        mRecyclerView.layoutManager = LinearLayoutManager(context,
+                LinearLayoutManager.HORIZONTAL,false)
+        mRecyclerView.adapter = mAdapter
+        mAdapter.scaleType = mScaleType
+        mAdapter.imageLoader = imageLoader
+        mAdapter.itemClickListener = itemClickListener
+        mRecyclerView.scrollToPosition(Int.MAX_VALUE/2)
+        PagerSnapHelper().attachToRecyclerView(mRecyclerView)
+        initRecyclerViewThing()
+    }
+
+    /**
+     * 从活动窗口移除的时候销毁定时器
+     */
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         stopScroll()

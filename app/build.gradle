@@ -27,8 +27,10 @@ dependencies {
     androidTestImplementation rootProject.ext.android_test
     androidTestImplementation rootProject.ext.espresso_core
 
-    api project(':baselibrary')
+
     api project(':mine')
+    api project(':article')
+    api project(':video')
     kapt rootProject.ext.router_compiler
 }
 repositories {

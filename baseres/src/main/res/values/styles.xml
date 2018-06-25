@@ -79,7 +79,8 @@
         <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
         <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
     </style>
-    
+
+    <!--轮播图-->
     <declare-styleable name="Banner">
         <!--指示器普通样式-->
         <attr name="indicator_normal" format="reference"/>
@@ -106,6 +107,12 @@
             <enum name="center" value="2"/>
             <enum name="centerCrop" value="3"/>
         </attr>
+    </declare-styleable>
+
+    <!--自定义viewpager-->
+    <declare-styleable name="CustomViewPager">
+        <attr name="horizontalCanScroll" format="boolean"/>
+        <attr name="canSmoothScroll" format="boolean"/>
     </declare-styleable>
 
 </resources>

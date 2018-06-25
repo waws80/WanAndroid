@@ -1,21 +1,31 @@
 package com.thanatos.wanandroid
 
-import android.content.Intent
-import android.net.Uri
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
-import android.transition.Explode
+import android.support.annotation.DrawableRes
+import android.support.annotation.NonNull
+import android.support.design.widget.TabLayout
+import android.support.v4.app.FragmentPagerAdapter
 import android.transition.Fade
-import android.transition.Slide
-import android.view.View
-import android.view.Window
+import android.view.Gravity
+import android.widget.CheckBox
+import com.thanatos.article.chapter.ChapterIndexFragment
+import com.thanatos.article.index.ArticleIndexFragment
 import com.thanatos.baselibrary.mvp.BaseMvpActivity
 import com.thanatos.baselibrary.mvp.BaseView
+import com.thanatos.mine.index.MainIndexFragment
+import com.thanatos.video.index.VideoIndexFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import pw.androidthanatos.annotation.Path
-import pw.androidthanatos.router.DispatcherActivity
-import pw.androidthanatos.router.Router
-import java.util.*
 
+/**
+ *  功能描述: 首页
+ *  @className:
+ *  @author: thanatos
+ *  @createTime: 2018/6/25
+ *  @updateTime: 2018/6/25 17:48
+ */
 @Path("/app/main")
 class MainActivity : BaseMvpActivity<BaseView,TestPresenter>() {
 
@@ -32,21 +42,73 @@ class MainActivity : BaseMvpActivity<BaseView,TestPresenter>() {
         setContentView(R.layout.activity_main)
         //设置导航栏
         setNavigationColor()
-
-        //RemoteData.articleData.getIndexBanner()
-
-        banner.addList(Arrays.asList("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529842671319&di=2f401e4c5a7ce7fdf2973da0a3480f5d&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fd%2F570f4a85c88e6.jpg",
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529842693116&di=d6c7ebd5050a1680398bf52d73c197a0&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fupload%2Fupc%2Ftx%2Fsoftbbs%2F1108%2F31%2Fc0%2F8829200_1314778455720_1024x1024soft.jpg",
-                "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3883729263,605988563&fm=27&gp=0.jpg"))
+        initUI()
     }
 
-    fun a(view: View){
 
-        //Router.getInstance().path("/mine/login")
-        val intent = Intent(this,DispatcherActivity::class.java)
-        intent.data = Uri.parse("router://thanatos.wanandroid/mine/login?a=1&b=true")
-        startActivity(intent)
-        //Router.getInstance().uri("router://thanatos.wanandroid/main/login?a=1&b=true")
+    private fun initUI(){
+        //添加fragment
+        val fragments = arrayOf(ArticleIndexFragment(),
+                ChapterIndexFragment(), VideoIndexFragment(), MainIndexFragment())
+        //添加tab
+        tabLayout.addTab(getTabView("首页",R.drawable.selector_home))
+        tabLayout.addTab(getTabView("体系",R.drawable.selector_type))
+        tabLayout.addTab(getTabView("视频",R.drawable.selector_video))
+        tabLayout.addTab(getTabView("我的",R.drawable.selector_mine))
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                (tab.customView as CheckBox)
+                        .isChecked  = false
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                (tab.customView as CheckBox)
+                        .isChecked  = true
+                mainPager.currentItem = tab.position
+            }
+
+        })
+
+        (tabLayout.getTabAt(0)?.customView as CheckBox).isChecked = true
+        //所有fragment都缓存
+        mainPager.offscreenPageLimit = fragments.size
+
+        mainPager.adapter = object : FragmentPagerAdapter(supportFragmentManager){
+            override fun getItem(position: Int) = fragments[position]
+            override fun getCount() = 4
+        }
+        mainPager.setOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
+    }
+
+    private fun getTabView(@NonNull text: String, @DrawableRes res: Int): TabLayout.Tab{
+        val cb = CheckBox(this)
+        cb.buttonDrawable = null
+        val drawable = resources.getDrawable(res)
+        drawable.setBounds(0,0,drawable.intrinsicWidth,drawable.intrinsicHeight)
+        cb.setCompoundDrawables(null,drawable,null,null)
+        cb.text = text
+        cb.gravity = Gravity.CENTER
+        cb.textSize = 12f
+        cb.isChecked = false
+        cb.isClickable = false
+        cb.setTextColor(getColorStateList())
+        cb.setBackgroundColor(Color.parseColor("#EBEBEB"))
+        return  tabLayout.newTab().setCustomView(cb)
+    }
+
+    private fun getColorStateList(): ColorStateList{
+        val checkedarr = IntArray(1)
+        checkedarr[0] = android.R.attr.state_checked
+        val uncheckedarr = IntArray(1)
+        uncheckedarr[0] = -android.R.attr.state_checked
+        val states:Array<IntArray> = arrayOf(checkedarr,uncheckedarr)
+        val colors: IntArray = IntArray(2)
+        colors[0] = resources.getColor(R.color.colorPrimaryDark)
+        colors[1] = Color.parseColor("#999999")
+        return ColorStateList(states,colors)
     }
 
 

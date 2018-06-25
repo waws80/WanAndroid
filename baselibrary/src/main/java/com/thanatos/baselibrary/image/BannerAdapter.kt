@@ -9,16 +9,28 @@ import com.thanatos.baselibrary.ext.printLog
 import com.thanatos.baselibrary.ext.roundRect
 import com.thanatos.baselibrary.ext.withRes
 
+/**
+ *  功能描述: 轮播图适配器
+ *  @className:
+ *  @author: thanatos
+ *  @createTime: 2018/6/25
+ *  @updateTime: 2018/6/25 10:08
+ */
 class BannerAdapter : RecyclerView.Adapter<BannerAdapter.BannerViewHolder>() {
-    private var mScaleType: ImageView.ScaleType = ImageView.ScaleType.FIT_XY
+    var scaleType: ImageView.ScaleType = ImageView.ScaleType.FIT_XY
 
-    private val mData = mutableListOf<Any>()
+    var data = emptyList<Any>()
+
+    var itemClickListener: ItemClickListener? = null
+
+    var imageLoader: IImageLoader? =null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BannerViewHolder {
         val params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT)
         val imageView = ImageView(parent.context)
-        imageView.scaleType = mScaleType
+        imageView.scaleType = scaleType
         imageView.layoutParams = params
         return BannerViewHolder(imageView)
     }
@@ -28,31 +40,22 @@ class BannerAdapter : RecyclerView.Adapter<BannerAdapter.BannerViewHolder>() {
     override fun onBindViewHolder(holder: BannerViewHolder, position: Int) {
         val imageView = holder.itemView as ImageView
         val p = position - Int.MAX_VALUE.shr(1)
-        var realPosition = p % mData.size
+        var realPosition = p % data.size
         if (realPosition < 0){
-            realPosition += mData.size
+            realPosition += data.size
         }
-        imageView.roundRect((mData[realPosition] as String) )
+        //加载图片回调
+        imageLoader?.load(imageView,data[realPosition])
 
+        //图片点击事件回调
         imageView.setOnClickListener {
-            printLog("点击了图片： $realPosition")
+            this.itemClickListener?.click(realPosition,data[realPosition])
         }
     }
-
-    fun setScaleType(scaleType: ImageView.ScaleType) {
-        this.mScaleType = scaleType
-    }
-
-    fun addList(list: List<Any>) {
-        this.mData.clear()
-        this.mData.addAll(list)
-        notifyDataSetChanged()
-    }
-
-    fun getList(): List<Any> {
-        return mData
-    }
-
 
     inner class BannerViewHolder(item: View): RecyclerView.ViewHolder(item)
+
+    interface ItemClickListener{
+        fun click(position: Int, data: Any)
+    }
 }
