@@ -36,6 +36,11 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import java.io.File
 import java.time.Duration
 
+
+val NO_NET = "当前网络不可用"
+
+
+
 /**
  * 设置状态栏（仅适用于使用v7包下的ToolBar页面）
  * 根布局必须设置 android:fitsSystemWindows="true"

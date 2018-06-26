@@ -28,4 +28,10 @@
 
     <!--控件选中颜色-->
     <color name="colorControlActivated">#607D8B</color>
+
+    <!--半透明背景-->
+    <color name="colorHrefTran">#33000000</color>
+
+    <!--半透明背景-->
+    <color name="colorDriver">#F5F5F5</color>
 </resources>

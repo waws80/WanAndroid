@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="6dp"
+        android:padding="16dp"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            tools:src="@mipmap/ic_launcher_round"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tvUserName"
+            android:textSize="12sp"
+            tools:text="张三"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_height="25dp"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintRight_toLeftOf="@+id/tvType"
+            app:layout_constraintLeft_toRightOf="@+id/ivIcon"
+            app:layout_constraintTop_toTopOf="@+id/ivIcon"
+            app:layout_constraintBottom_toBottomOf="@+id/ivIcon"
+            android:layout_marginLeft="8dp" />
+
+
+        <TextView
+            android:id="@+id/tvType"
+            android:textSize="12sp"
+            tools:text="网络访问"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:maxWidth="160dp"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/ivIcon"/>
+
+
+        <TextView
+            android:id="@+id/tvContent"
+            tools:text="教你怎么使用锅碗瓢盆教你怎么"
+            android:textSize="14sp"
+            android:textColor="@color/textColor"
+            android:lineSpacingExtra="4sp"
+            app:layout_constraintTop_toBottomOf="@+id/ivIcon"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/rbLike"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvContent"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            tools:text="22小时前"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvContent"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:background="@color/colorDriver"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"/>
+
+
+
+</LinearLayout>

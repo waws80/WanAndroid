@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.thanatos.baselibrary.R
+import com.thanatos.baselibrary.ext.dp2px
 
 /**
  *  功能描述: activity基类
@@ -131,17 +132,27 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     protected fun toast(text: String, duration: Int = Toast.LENGTH_SHORT,
-                        @Slide.GravityFlag gravity: Int, x: Int = 0, y: Int = 0){
+                        @Slide.GravityFlag gravity: Int = Gravity.BOTTOM, x: Int = 0, y: Int = dp2px(60)){
         val toast = Toast.makeText(applicationContext,text,duration)
         toast.setGravity(gravity,x,y)
         toast.show()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        //当前activity页面有加载框
         if(findViewById<View>(R.id.base_progress).visibility == View.VISIBLE){
             findViewById<View>(R.id.base_progress).visibility = View.GONE
             return true
         }
+
+        //fragment 返回按键监听事件
+        val fragments = supportFragmentManager.fragments
+        fragments.forEach {
+            if (it is BaseFragment){
+                return it.onBackPressed()
+            }
+        }
+
         return super.onKeyDown(keyCode, event)
     }
 

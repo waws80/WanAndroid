@@ -33,11 +33,16 @@ class CustomViewPager : ViewPager{
     }
 
 
+
     override fun setCurrentItem(item: Int) {
         this.setCurrentItem(item,canSmoothScroll)
     }
 
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
+        return super.onInterceptTouchEvent(ev) && canScroll
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         return super.dispatchTouchEvent(ev) && canScroll
     }
 

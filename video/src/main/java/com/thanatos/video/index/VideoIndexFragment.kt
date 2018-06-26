@@ -1,5 +1,6 @@
 package com.thanatos.video.index
 
+import android.os.Bundle
 import com.thanatos.baselibrary.base.BaseFragment
 import com.thanatos.baselibrary.ext.printLog
 import com.thanatos.video.R
@@ -12,11 +13,9 @@ import com.thanatos.video.R
  *  @updateTime: 2018/6/25 17:08
  */
 class VideoIndexFragment : BaseFragment(){
-    override fun onInit() {
-        printLog("视频首页加载了")
+    override fun onInit(savedInstanceState: Bundle?) {
+        setContentView(R.layout.video_fragment_index)
     }
-
-    override fun getContentView() = R.layout.video_fragment_index
 
 
 }

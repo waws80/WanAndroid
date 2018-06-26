@@ -1,6 +1,8 @@
 package com.thanatos.mine.mine.register.mvp
 
 import com.thanatos.baselibrary.RegexUtil
+import com.thanatos.baselibrary.ext.NO_NET
+import com.thanatos.baselibrary.ext.hasNet
 import com.thanatos.baselibrary.ext.isEmpty
 import com.thanatos.baselibrary.mvp.BasePresenter
 
@@ -15,7 +17,11 @@ class RegisterPresenter : BasePresenter<RegisterView>() {
 
         //当前页面不显示不进行数据加载
         if (!visible()) return
-
+        //当前网络不可用
+        if (!hasNet()){
+            getView().showSnackBar(NO_NET)
+            return
+        }
         if (account.isEmpty()){
             getView().showSnackBar("账号为空")
             return

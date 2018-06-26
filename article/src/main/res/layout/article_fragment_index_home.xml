@@ -31,13 +31,20 @@
 
             <com.thanatos.baselibrary.image.Banner
                 android:id="@+id/articleBanner"
+                app:indicator_selector="@drawable/shape_banner_indicator_selector"
+                app:indicator_normal="@drawable/shape_banner_indicator_normal"
+                app:indicator_gravity="right"
+                app:indicator_background="@color/colorHrefTran"
+                app:indicator_height="30dp"
+                app:interval="6000"
+                app:autoStart="true"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"/>
 
-            <android.support.v7.widget.RecyclerView
+            <com.thanatos.baselibrary.widget.CustomRecyclerView
                 android:id="@+id/articleRV"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="1000dp"/>
 
         </LinearLayout>
 

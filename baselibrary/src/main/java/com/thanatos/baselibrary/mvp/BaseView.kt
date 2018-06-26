@@ -6,7 +6,7 @@ import android.view.Gravity
 
 interface BaseView {
 
-    fun showProgress(text: String)
+    fun showProgress(text: String = "请稍后...")
 
     fun hideProgress()
 

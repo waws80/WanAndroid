@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.text.Html
+import android.view.KeyEvent
 import android.widget.ImageView
 import android.widget.TextView
 import com.thanatos.baselibrary.base.BaseActivity
@@ -53,13 +54,17 @@ class SplishActivity : BaseActivity() {
             finish()
             overridePendingTransition(android.R.anim.fade_in,0)
         })
-
-
-
     }
 
     override fun onDestroy() {
         super.onDestroy()
         mCountDownTimerUtils.destory()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }

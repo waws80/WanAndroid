@@ -14,10 +14,12 @@ import android.view.MotionEvent
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.TextView
 import com.thanatos.baselibrary.R
 import com.thanatos.baselibrary.ext.dp2px
 import com.thanatos.baselibrary.thread.ThreadManager
 import com.thanatos.baselibrary.timer.CountDownTimerUtils
+import com.thanatos.baselibrary.widget.viewpager.CustomViewPager
 
 /**
  * 轮播图
@@ -39,14 +41,23 @@ class Banner  : RelativeLayout {
     private var mScaleType: ImageView.ScaleType = ImageView.ScaleType.FIT_XY
     private var mScroll: Boolean = false
 
+    private var mCustomCanScroll: Boolean = false
+
+    private var mCustomViewPager: CustomViewPager? = null
+
     //轮播图片
-    private val mRecyclerView: RecyclerView by lazy(LazyThreadSafetyMode.SYNCHRONIZED){
-        RecyclerView(context)
+    private val mRecyclerView: CustomRecyclerView by lazy(LazyThreadSafetyMode.SYNCHRONIZED){
+        CustomRecyclerView(context)
     }
 
     //轮播图下标
     private val mLinearLayout: LinearLayout by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         LinearLayout(context)
+    }
+
+    //标题
+    private val mContentTitle: TextView by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+        TextView(context)
     }
 
     //轮播图片params
@@ -69,7 +80,9 @@ class Banner  : RelativeLayout {
 
     var imageLoader: IImageLoader? = null
 
-    var itemClickListener: BannerAdapter.ItemClickListener? = null
+    var itemClickListener: ItemClickListener? = null
+
+    var titleLoader: ITitleLoader? =null
 
     constructor(context: Context): this(context, null)
 
@@ -81,6 +94,9 @@ class Banner  : RelativeLayout {
         initAttr(attrs)
         //设置轮播图
         initUI()
+
+        //初始化customViewPager 事件拦截
+        initPagerIntecepter()
     }
 
 
@@ -136,9 +152,14 @@ class Banner  : RelativeLayout {
     private fun initUI(){
         //初始化图片
         mContentParams.addRule(RelativeLayout.CENTER_IN_PARENT)
-
         mRecyclerView.layoutParams = mContentParams
         addView(mRecyclerView)
+        mRecyclerView.layoutManager = LinearLayoutManager(context,
+                LinearLayoutManager.HORIZONTAL,false)
+        mRecyclerView.adapter = mAdapter
+        mRecyclerView.scrollToPosition(Int.MAX_VALUE/2)
+        PagerSnapHelper().attachToRecyclerView(mRecyclerView)
+        initRecyclerViewThing()
 
         //初始化图片下标
         mPointsParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
@@ -150,8 +171,29 @@ class Banner  : RelativeLayout {
         mLinearLayout.setPadding(context.dp2px(16),0,context.dp2px(16),0)
         addView(mLinearLayout)
 
+        //初始化标题
+        mContentTitle.layoutParams = mPointsParams
+        mContentTitle.gravity = Gravity.CENTER_VERTICAL or Gravity.LEFT
+        mContentTitle.textSize = 14f
+        mContentTitle.setTextColor(Color.WHITE)
+        mContentTitle.setPadding(context.dp2px(16),0,context.dp2px(16),0)
+        addView(mContentTitle)
+
     }
 
+    /**
+     * 获取自定义pager 并初始化滑动标记(解决首页轮播图和pager滑动冲突)
+     */
+    private fun initPagerIntecepter(){
+        var p = parent
+        while (p != null && p !is CustomViewPager){
+            p = p.parent
+        }
+        if (p != null && p is CustomViewPager) {
+            mCustomCanScroll = p.canScroll
+            mCustomViewPager = p
+        }
+    }
 
     /**
      * 设置rv的滚动事件和轮播图的轮询
@@ -164,7 +206,7 @@ class Banner  : RelativeLayout {
 
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-
+                if(mAdapter.data.isEmpty()) return
                 val position = (mRecyclerView.layoutManager as LinearLayoutManager)
                         .findFirstVisibleItemPosition()
                 val p = position - Int.MAX_VALUE.shr(1)
@@ -181,6 +223,10 @@ class Banner  : RelativeLayout {
                         (mLinearLayout.getChildAt(realPosition) as ImageView)
                                 .setImageDrawable(mIndicatorSelector)
                     }
+                }
+
+                if (titleLoader != null){
+                    titleLoader?.load(mContentTitle,mAdapter.data[realPosition])
                 }
             }
         })
@@ -206,9 +252,13 @@ class Banner  : RelativeLayout {
      * 添加数据
      */
     fun addList(@NonNull list: List<Any> = emptyList()){
-        mAdapter.data = list
+        initPagerIntecepter()
+        mAdapter.setList(list)
         mAdapter.scaleType
         if (list.isNotEmpty() && mIndicatorHeight > 0){
+            mAdapter.imageLoader = imageLoader
+            mAdapter.itemClickListener = itemClickListener
+            mAdapter.mTitleView = mContentTitle
             //添加指示器
             if (mIndicatorNormal != null){
                 mLinearLayout.removeAllViews()
@@ -235,12 +285,18 @@ class Banner  : RelativeLayout {
      * 手指按下停止轮询 手指抬起重新开始轮询
      */
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        parent.requestDisallowInterceptTouchEvent(true)
         when(ev.action){
+            MotionEvent.ACTION_UP ->{
+                mCustomViewPager?.canScroll = mCustomCanScroll
+                startScroll()
+            }
             MotionEvent.ACTION_DOWN ->{
+                mCustomViewPager?.canScroll = true
                 stopScroll()
             }
-            MotionEvent.ACTION_UP ->{
-                startScroll()
+            else ->{
+                mCustomViewPager?.canScroll = true
             }
         }
         return super.dispatchTouchEvent(ev)
@@ -266,15 +322,6 @@ class Banner  : RelativeLayout {
      */
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        mRecyclerView.layoutManager = LinearLayoutManager(context,
-                LinearLayoutManager.HORIZONTAL,false)
-        mRecyclerView.adapter = mAdapter
-        mAdapter.scaleType = mScaleType
-        mAdapter.imageLoader = imageLoader
-        mAdapter.itemClickListener = itemClickListener
-        mRecyclerView.scrollToPosition(Int.MAX_VALUE/2)
-        PagerSnapHelper().attachToRecyclerView(mRecyclerView)
-        initRecyclerViewThing()
     }
 
     /**
@@ -286,6 +333,27 @@ class Banner  : RelativeLayout {
         timerUtils?.destory()
         timerUtils = null
     }
+
+
+    inner class CustomRecyclerView(context: Context): RecyclerView(context){
+
+        override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+            parent.requestDisallowInterceptTouchEvent(true)
+            when(ev.action){
+                MotionEvent.ACTION_UP ->{
+                    if (!mCustomCanScroll){
+                        mCustomViewPager?.canScroll = mCustomCanScroll
+                    }
+                }
+                else ->{
+                    mCustomViewPager?.canScroll = true
+                }
+            }
+            return super.dispatchTouchEvent(ev)
+        }
+    }
+
+
 
 
 

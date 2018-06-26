@@ -34,13 +34,16 @@ class RemoteData private constructor(){
         private val mServicer = HttpManager.getRetrofit().create(ArticleService::class.java)
 
         //获取首页轮播图
-        fun getIndexBanner(){
+        fun getIndexBanner(next: (Boolean, List<IndexBannerBean>, String) -> Unit){
 
              apiObservable(mServicer.getIndexBanner())
                      .subscribe(HttpCallBack.getInstance().callBack({
                          data, res ->
-                         val list = GsonUtil.fromList(data,IndexBannerBean::class.java)
-                         print(list)
+                         var beans: MutableList<IndexBannerBean>? = GsonUtil.fromList(data,IndexBannerBean::class.java)
+                         if (beans == null){
+                             beans = mutableListOf()
+                         }
+                         next.invoke(res.isSuccessful(),beans, res.msg)
                      }))
         }
 
