@@ -1,6 +1,7 @@
 package com.thanatos.article.index.mvp
 
 import com.thanatos.baselibrary.mvp.BaseModel
+import com.thanatos.baselibrary.net.ArticleListBean
 import com.thanatos.baselibrary.net.IndexBannerBean
 
 /**
@@ -17,5 +18,10 @@ class ArticleIndexModel: BaseModel() {
      */
     fun getArticleBanner(next:(Boolean, List<IndexBannerBean>, String) -> Unit) {
         mRemoteData.articleData.getIndexBanner(next)
+    }
+
+    //获取首页文章列表
+    fun getArticleList(page: Int, next: (Boolean, ArticleListBean, String) -> Unit) {
+        mRemoteData.articleData.getArticleList(page,next)
     }
 }

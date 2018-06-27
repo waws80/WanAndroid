@@ -1,6 +1,7 @@
 package com.thanatos.article.index.mvp
 
 import com.thanatos.baselibrary.mvp.BaseView
+import com.thanatos.baselibrary.net.ArticleListBean
 import com.thanatos.baselibrary.net.IndexBannerBean
 
 /**
@@ -17,6 +18,11 @@ interface ArticleIndexView: BaseView{
      */
     fun finishBanner(data: List<IndexBannerBean>)
 
+    /**
+     * 完成首页文章加载
+     */
+    fun finishArticle(bean: ArticleListBean)
+
 }
 
 /**
@@ -32,4 +38,9 @@ interface IArticleIndexPresenter{
      * 获取轮播图数据
      */
     fun getBannerInfo()
+
+    /**
+     * 获取首页文章列表
+     */
+    fun getArticleList(page: Int)
 }

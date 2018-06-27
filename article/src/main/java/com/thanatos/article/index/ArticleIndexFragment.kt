@@ -13,6 +13,7 @@ import com.thanatos.baselibrary.image.IImageLoader
 import com.thanatos.baselibrary.image.ITitleLoader
 import com.thanatos.baselibrary.image.ItemClickListener
 import com.thanatos.baselibrary.mvp.BaseMvpFragment
+import com.thanatos.baselibrary.net.ArticleListBean
 import com.thanatos.baselibrary.net.IndexBannerBean
 import kotlinx.android.synthetic.main.article_fragment_index_home.*
 
@@ -26,6 +27,12 @@ import kotlinx.android.synthetic.main.article_fragment_index_home.*
 class ArticleIndexFragment : BaseMvpFragment<ArticleIndexView, ArticleIndexPresenter>(),
     ArticleIndexView{
 
+    private val mAdapter: ArticleIndexAdapter by lazy {
+        ArticleIndexAdapter()
+    }
+
+    private var mPage: Int = 0
+
     override fun getPresenter(): ArticleIndexPresenter {
         return ArticleIndexPresenter()
     }
@@ -34,9 +41,10 @@ class ArticleIndexFragment : BaseMvpFragment<ArticleIndexView, ArticleIndexPrese
         super.onInit(savedInstanceState)
         setContentView(R.layout.article_fragment_index_home)
         mPresenter?.getBannerInfo()
+        mPresenter?.getArticleList(mPage)
 
         articleRV.layoutManager = GridLayoutManager(activity,1)
-        articleRV.adapter = ArticleIndexAdapter()
+        articleRV.adapter = mAdapter
     }
 
     override fun finishBanner(data: List<IndexBannerBean>) {
@@ -62,6 +70,16 @@ class ArticleIndexFragment : BaseMvpFragment<ArticleIndexView, ArticleIndexPrese
 
         }
         articleBanner.addList(data)
+    }
+
+
+    override fun finishArticle(bean: ArticleListBean) {
+        if (bean.datas.isEmpty()){
+            return
+        }
+        mPage = bean.curPage+1
+        mAdapter.data.addAll(bean.datas)
+        mAdapter.notifyDataSetChanged()
     }
 
     override fun onBackPressed(): Boolean {

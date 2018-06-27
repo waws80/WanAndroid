@@ -65,6 +65,7 @@ class RemoteData private constructor(){
                     })
         }
 
+        //进行注册操作
         fun register(account: String, password: String, next: (Boolean, String) -> Unit) {
 
             val table = HashMap<String, String>()
@@ -80,6 +81,16 @@ class RemoteData private constructor(){
                             userBean.id.saveSp("userId")
                         }
                         next.invoke(responseException.isSuccessful(),responseException.msg)
+                    })
+        }
+
+        //获取首页文章列表
+        fun getArticleList(page: Int, next: (Boolean, ArticleListBean, String) -> Unit) {
+            apiObservable(mServicer.getArticleList(page))
+                    .subscribe(HttpCallBack.getInstance().callBack { any, responseException ->
+                        next.invoke(responseException.isSuccessful(),
+                                GsonUtil.fromObject(any,ArticleListBean::class.java),
+                                responseException.msg)
                     })
         }
 

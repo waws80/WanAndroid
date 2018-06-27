@@ -35,4 +35,23 @@ class ArticleIndexPresenter: BasePresenter<ArticleIndexView>(),IArticleIndexPres
 
         })
     }
+
+    override fun getArticleList(page: Int) {
+        //当前活动页面不存在
+        if (!visible()) return
+        //当前网络不可用
+        if (!hasNet()) {
+            getView().showSnackBar("当前网络不可用")
+            return
+        }
+        getView().showProgress()
+        articleModel.getArticleList(page,{ok, bean, msg ->
+            getView().hideProgress()
+            if (ok){
+                getView().finishArticle(bean)
+            }else{
+                getView().showSnackBar(msg)
+            }
+        })
+    }
 }

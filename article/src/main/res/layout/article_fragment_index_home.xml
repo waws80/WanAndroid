@@ -18,7 +18,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <com.thanatos.baselibrary.widget.CustomNestedScrollView
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:fillViewport="true"
         android:layout_width="match_parent"
@@ -41,13 +41,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="180dp"/>
 
-            <com.thanatos.baselibrary.widget.CustomRecyclerView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/articleRV"
+                android:nestedScrollingEnabled="false"
                 android:layout_width="match_parent"
-                android:layout_height="1000dp"/>
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </com.thanatos.baselibrary.widget.CustomNestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

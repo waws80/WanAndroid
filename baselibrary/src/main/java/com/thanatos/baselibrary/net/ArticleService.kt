@@ -25,4 +25,8 @@ interface ArticleService {
     @GET("banner/json")
     fun getIndexBanner(): Observable<Any>
 
+    //首页文章列表
+    @GET("article/list/{page}/json")
+    fun getArticleList(@Path("page") page: Int): Observable<Any>
+
 }

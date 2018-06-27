@@ -18,6 +18,9 @@ data class ResponseException(val code: Int, val msg: String){
     public fun isSuccessful() = code == 0
 }
 
+//用户信息实体类
+data class UserBean(val username: String, val password: String, val id: String)
+
 //首页轮播图banner实体类
 data class IndexBannerBean(val desc: String,
                            val id: Int,
@@ -28,8 +31,22 @@ data class IndexBannerBean(val desc: String,
                            val type: Int,
                            val url: String)
 
-//用户信息实体类
-data class UserBean(val username: String, val password: String, val id: String)
+//首页文章列表
+data class ArticleListBean(val curPage: Int,
+                           val pageCount: Int,
+                           val total: Int,
+                           val datas: MutableList<ArticleBean>)
+
+//首页文章实体类
+data class ArticleBean(val author: String, //作者
+                       val chapterName: String, //二级分类
+                       val title: String, //标题
+                       val niceDate: String, //时间
+                       val link: String, //连接
+                       val id: String, //文章id
+                       val collect: Boolean,//是否收藏
+                       val superChapterName: String //一级分类
+                        )
 
 
 

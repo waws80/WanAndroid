@@ -67,8 +67,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <RadioButton
-            android:id="@+id/rbLike"
+        <CheckBox
+            android:id="@+id/rbCollect"
+            android:button="@null"
+            android:background="@drawable/selector_article_collect"
             android:layout_marginTop="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvContent"
