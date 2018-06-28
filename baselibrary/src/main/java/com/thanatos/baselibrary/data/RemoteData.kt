@@ -59,6 +59,8 @@ class RemoteData private constructor(){
                             val userBean = GsonUtil.fromObject(any,UserBean::class.java)
                             GsonUtil.toJson(userBean).saveSp("userBean")
                             userBean.id.saveSp("userId")
+                            SpUtil.put("isLogin",true)
+
                         }
                         next.invoke(responseException.isSuccessful(),responseException.msg)
 
@@ -79,6 +81,7 @@ class RemoteData private constructor(){
                             val userBean = GsonUtil.fromObject(any,UserBean::class.java)
                             GsonUtil.toJson(userBean).saveSp("userBean")
                             userBean.id.saveSp("userId")
+                            SpUtil.put("isLogin",true)
                         }
                         next.invoke(responseException.isSuccessful(),responseException.msg)
                     })

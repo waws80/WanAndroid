@@ -28,8 +28,15 @@ object GsonUtil {
         if (json == null){
             return mutableListOf()
         }
+        return fromJsonList(gson.toJson(json),clazz)
+    }
+
+    fun <D> fromJsonList(@NonNull json: String?, clazz: Class<D>): MutableList<D>{
+        if (json == null){
+            return mutableListOf()
+        }
         try {
-            val array = JsonParser().parse(gson.toJson(json)).asJsonArray
+            val array = JsonParser().parse(json).asJsonArray
             val list = mutableListOf<D>()
             array.forEach {
                 val item = it.asJsonObject

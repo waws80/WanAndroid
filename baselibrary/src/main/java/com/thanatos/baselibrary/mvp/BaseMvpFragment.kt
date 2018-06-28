@@ -61,7 +61,7 @@ abstract class BaseMvpFragment<V: BaseView, P: BasePresenter<V>> : BaseFragment(
      */
     protected fun toast(text: String, duration: Int = Toast.LENGTH_SHORT,
                         @Slide.GravityFlag gravity: Int = Gravity.BOTTOM, x: Int = 0, y: Int = activity?.dp2px(60)!!){
-        val toast = Toast.makeText(BaseApplication.getContext(),text,duration)
+        val toast = Toast.makeText(BaseApplication.context,text,duration)
         toast.setGravity(gravity,x,y)
         toast.show()
     }

@@ -2,7 +2,6 @@ package com.thanatos.baselibrary.base;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.content.Context;
 
 import com.thanatos.baselibrary.BuildConfig;
 import com.thanatos.baselibrary.intecepter.WanAndroidPremissionIntecepter;
@@ -10,7 +9,6 @@ import com.thanatos.baselibrary.intecepter.WanAndroidRouterIntecepter;
 import com.thanatos.baselibrary.mvp.PresenterProviders;
 
 import pw.androidthanatos.router.Router;
-import top.waws.premission.DefaultIntecepter;
 import top.waws.premission.PermissionUtil;
 
 /**
@@ -20,7 +18,7 @@ import top.waws.premission.PermissionUtil;
  *  @createTime: 2018/6/12
  *  @updateTime: 2018/6/12 15:00
  */
-public class BaseApplication extends Application{
+public class BaseApp extends Application{
 
     @SuppressLint("StaticFieldLeak")
     private static Application  mContext;

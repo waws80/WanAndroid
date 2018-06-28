@@ -205,7 +205,7 @@ fun ImageView.withCircleRes(@DrawableRes id: Int){
  * 下载图片
  */
 fun downloadImage(url: String): File{
-    val future = Glide.with(BaseApplication.getContext())
+    val future = Glide.with(BaseApplication.context)
             .load(url)
             .downloadOnly(800,800)
     return  future.get()
@@ -216,6 +216,10 @@ fun downloadImage(url: String): File{
  */
 fun String.saveSp(@NonNull key: String){
     SpUtil.put(key,this)
+}
+
+fun isLogin(): Boolean{
+  return  SpUtil.get("isLogin",false)
 }
 
 /**
@@ -245,7 +249,7 @@ fun printLog(msg: Any?){
  * 判断网络是否可用
  */
 fun  hasNet(): Boolean{
-    val ctxManager: ConnectivityManager? = BaseApplication.getContext().applicationContext
+    val ctxManager: ConnectivityManager? = BaseApplication.context.applicationContext
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     if (null != ctxManager){
         val info: NetworkInfo? = ctxManager.activeNetworkInfo
@@ -263,7 +267,7 @@ fun isWifi(): Boolean{
     if (!hasNet()){
         return false
     }
-    val ctxManager: ConnectivityManager? = BaseApplication.getContext().applicationContext
+    val ctxManager: ConnectivityManager? = BaseApplication.context.applicationContext
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager ?: return false
 
     return ctxManager?.activeNetworkInfo?.type == ConnectivityManager.TYPE_WIFI

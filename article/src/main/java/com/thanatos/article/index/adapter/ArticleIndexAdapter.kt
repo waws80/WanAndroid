@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.thanatos.article.R
 import com.thanatos.article.R.id.tvUserName
 import com.thanatos.baselibrary.ext.dp2px
+import com.thanatos.baselibrary.ext.hasNet
 import com.thanatos.baselibrary.ext.withCircleRes
 import com.thanatos.baselibrary.ext.withRes
 import com.thanatos.baselibrary.net.ArticleBean
@@ -40,6 +41,12 @@ class ArticleIndexAdapter(private val activity: Activity) : RecyclerView.Adapter
         holder.itemView.tvContent.text = bean.title
         holder.itemView.rbCollect.isChecked = bean.collect
         holder.itemView.tvDate.text = bean.niceDate
+
+        holder.itemView.rbCollect.setOnClickListener {
+            if (!hasNet()){
+
+            }
+        }
 
     }
 

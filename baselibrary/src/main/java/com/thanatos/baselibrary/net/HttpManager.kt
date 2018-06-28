@@ -1,7 +1,12 @@
 package com.thanatos.baselibrary.net
 
+import com.google.gson.Gson
 import com.thanatos.baselibrary.BuildConfig
 import com.thanatos.baselibrary.gson.GsonUtil
+import com.thanatos.baselibrary.sputil.SpUtil
+import okhttp3.Cookie
+import okhttp3.CookieJar
+import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,6 +34,17 @@ object HttpManager {
         okHttpClientBuilder.connectTimeout(60,TimeUnit.SECONDS)
                 .readTimeout(60,TimeUnit.SECONDS)
                 .writeTimeout(60,TimeUnit.SECONDS)
+                .cookieJar(object : CookieJar{
+                    override fun saveFromResponse(url: HttpUrl, cookies: MutableList<Cookie>) {
+                        SpUtil.put(url.host(),GsonUtil.toJson(cookies))
+                    }
+
+                    override fun loadForRequest(url: HttpUrl): MutableList<Cookie> {
+                        val json: String = SpUtil.get(url.host(), String())
+                        return GsonUtil.fromJsonList(json,Cookie::class.java)
+                    }
+
+                })
 
         //设置retrofit
         retrofitBuilder.baseUrl(BuildConfig.APP_BASE_URL_ARTICLE)
