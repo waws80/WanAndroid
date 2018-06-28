@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+android:color="#66000000">
 
-    <item android:state_checked="true" android:drawable="@drawable/ic_collect_light"/>
-    <item android:state_checked="false" android:drawable="@drawable/ic_collect_normal"/>
-</selector>
+<item>
+    <selector>
+        <item android:state_checked="true" android:drawable="@drawable/ic_collect_light"/>
+        <item android:state_checked="false" android:drawable="@drawable/ic_collect_normal"/>
+    </selector>
+</item>
+
+</ripple>

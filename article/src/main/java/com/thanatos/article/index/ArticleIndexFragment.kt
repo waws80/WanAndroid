@@ -28,7 +28,7 @@ class ArticleIndexFragment : BaseMvpFragment<ArticleIndexView, ArticleIndexPrese
     ArticleIndexView{
 
     private val mAdapter: ArticleIndexAdapter by lazy {
-        ArticleIndexAdapter()
+        ArticleIndexAdapter(activity!!)
     }
 
     private var mPage: Int = 0

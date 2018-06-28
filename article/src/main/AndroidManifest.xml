@@ -1,2 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.thanatos.article" />
+    package="com.thanatos.article">
+
+    <application>
+        <activity android:name=".articlecontent.ArticleWebViewActivity"></activity>
+    </application>
+
+</manifest>

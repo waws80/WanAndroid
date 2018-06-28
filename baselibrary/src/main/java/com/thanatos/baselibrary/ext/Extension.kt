@@ -193,6 +193,15 @@ fun ImageView.withRes(@DrawableRes id: Int, round: Int = 18){
 }
 
 /**
+ * 加载资源文件
+ */
+fun ImageView.withCircleRes(@DrawableRes id: Int){
+    Glide.with(this).load(id)
+            .apply(RequestOptions.circleCropTransform())
+            .into(this)
+}
+
+/**
  * 下载图片
  */
 fun downloadImage(url: String): File{
