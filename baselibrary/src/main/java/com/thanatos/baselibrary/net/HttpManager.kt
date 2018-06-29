@@ -36,10 +36,12 @@ object HttpManager {
                 .writeTimeout(60,TimeUnit.SECONDS)
                 .cookieJar(object : CookieJar{
                     override fun saveFromResponse(url: HttpUrl, cookies: MutableList<Cookie>) {
+                        //保存cookie
                         SpUtil.put(url.host(),GsonUtil.toJson(cookies))
                     }
 
                     override fun loadForRequest(url: HttpUrl): MutableList<Cookie> {
+                        //获取cookie
                         val json: String = SpUtil.get(url.host(), String())
                         return GsonUtil.fromJsonList(json,Cookie::class.java)
                     }

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import com.thanatos.baselibrary.ext.setStatusBar
 import com.thanatos.baselibrary.mvp.BaseMvpActivity
+import com.thanatos.baselibrary.thread.ThreadManager
 import com.thanatos.mine.R
 import com.thanatos.mine.mine.login.mvp.LoginPresenter
 import com.thanatos.mine.mine.login.mvp.LoginView
@@ -79,6 +80,10 @@ class LoginActivity : BaseMvpActivity<LoginView, LoginPresenter>(), LoginView {
 
     override fun finishLogin() {
         showInfo("登录成功")
+        ThreadManager.handler.postDelayed({
+            setResult(Activity.RESULT_OK)
+            onBackPressed()
+        },1000)
     }
 
 

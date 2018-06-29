@@ -3,7 +3,8 @@
     package="com.thanatos.article">
 
     <application>
-        <activity android:name=".articlecontent.ArticleWebViewActivity"></activity>
+        <activity android:name=".articlecontent.ArticleWebViewActivity" />
+        <activity android:name=".hotnet.HotNetActivity"></activity>
     </application>
 
 </manifest>

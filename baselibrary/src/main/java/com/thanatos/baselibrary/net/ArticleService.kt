@@ -29,4 +29,12 @@ interface ArticleService {
     @GET("article/list/{page}/json")
     fun getArticleList(@Path("page") page: Int): Observable<Any>
 
+    //收藏站内文章
+    @POST("lg/collect/{id}/json")
+    fun collectArticle(@Path("id") id: Int): Observable<Any>
+
+    //取消文章的收藏,文章列表
+    @POST("lg/uncollect_originId/{id}/json")
+    fun unCollectArticle(@Path("id") id: Int): Observable<Any>
+
 }

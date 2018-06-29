@@ -14,4 +14,6 @@
     <string name="app_share_text">分享</string>
     <string name="app_collect_text">收藏</string>
     <string name="app_open_brower_system_text">系统浏览器打开</string>
+    <string name="app_text_hot">热门</string>
+    <string name="app_text_search">搜索</string>
 </resources>

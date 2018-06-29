@@ -24,4 +24,14 @@ class ArticleIndexModel: BaseModel() {
     fun getArticleList(page: Int, next: (Boolean, ArticleListBean, String) -> Unit) {
         mRemoteData.articleData.getArticleList(page,next)
     }
+
+    //收藏文章
+    fun collectArticle(id: Int, next: (Boolean, String) -> Unit) {
+        mRemoteData.articleData.collectArticle(id,next)
+    }
+
+    //取消收藏文章（文章列表）
+    fun unCollectArticle(id: Int, next: (Boolean, String) -> Unit){
+        mRemoteData.articleData.unCollectArticle(id,next)
+    }
 }

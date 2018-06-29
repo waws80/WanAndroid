@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#66000000">
+
+    <item>
+        <selector>
+            <item android:drawable="@drawable/ic_hot"/>
+        </selector>
+    </item>
+
+</ripple>

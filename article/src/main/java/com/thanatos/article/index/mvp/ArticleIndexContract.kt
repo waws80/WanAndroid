@@ -23,6 +23,16 @@ interface ArticleIndexView: BaseView{
      */
     fun finishArticle(bean: ArticleListBean)
 
+    /**
+     * 收藏文章失败
+     */
+    fun collectError(position: Int)
+
+    /**
+     * 撤销收藏失败
+     */
+    fun unCollectError(position: Int)
+
 }
 
 /**
@@ -43,4 +53,14 @@ interface IArticleIndexPresenter{
      * 获取首页文章列表
      */
     fun getArticleList(page: Int)
+
+    /**
+     * 收藏文章
+     */
+    fun collectArticle(id: Int, position: Int)
+
+    /**
+     * 去掉收藏
+     */
+    fun unCollectArticle(id: Int, position: Int)
 }

@@ -97,5 +97,20 @@ class RemoteData private constructor(){
                     })
         }
 
+        fun collectArticle(id: Int, next: (Boolean, String) -> Unit) {
+            apiObservable(mServicer.collectArticle(id))
+                    .subscribe(HttpCallBack.getInstance().callBack { any, responseException ->
+                        next(responseException.isSuccessful(),responseException.msg)
+                    })
+        }
+
+
+        fun unCollectArticle(id: Int, next: (Boolean, String) -> Unit) {
+            apiObservable(mServicer.unCollectArticle(id))
+                    .subscribe(HttpCallBack.getInstance().callBack { any, responseException ->
+                        next(responseException.isSuccessful(), responseException.msg)
+                    })
+        }
+
     }
 }

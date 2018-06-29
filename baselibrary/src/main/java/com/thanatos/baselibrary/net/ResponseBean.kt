@@ -43,8 +43,8 @@ data class ArticleBean(val author: String, //作者
                        val title: String, //标题
                        val niceDate: String, //时间
                        val link: String, //连接
-                       val id: String, //文章id
-                       val collect: Boolean,//是否收藏
+                       val id: Int, //文章id
+                       var collect: Boolean,//是否收藏
                        val superChapterName: String //一级分类
                         )
 

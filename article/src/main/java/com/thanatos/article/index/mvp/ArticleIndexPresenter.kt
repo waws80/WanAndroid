@@ -1,6 +1,7 @@
 package com.thanatos.article.index.mvp
 
 import com.thanatos.baselibrary.ext.hasNet
+import com.thanatos.baselibrary.ext.toast
 import com.thanatos.baselibrary.mvp.BasePresenter
 
 /**
@@ -52,6 +53,29 @@ class ArticleIndexPresenter: BasePresenter<ArticleIndexView>(),IArticleIndexPres
             }else{
                 getView().showSnackBar(msg)
             }
+        })
+    }
+
+    override fun collectArticle(id: Int, position: Int) {
+        getView().showProgress()
+        articleModel.collectArticle(id,{ ok, msg ->
+            getView().hideProgress()
+            if (!ok){
+                getView().showSnackBar(msg)
+                getView().collectError(position)
+            }
+        })
+    }
+
+
+    override fun unCollectArticle(id: Int, position: Int) {
+        articleModel.unCollectArticle(id,{ ok ,msg ->
+            getView().hideProgress()
+            if (!ok){
+                getView().showSnackBar(msg)
+                getView().unCollectError(position)
+            }
+
         })
     }
 }

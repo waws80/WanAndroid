@@ -18,13 +18,11 @@ import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.thanatos.baselibrary.RegexUtil
@@ -279,11 +277,33 @@ fun isWifi(): Boolean{
 fun Activity.showSnackBarMsg(@NonNull msg: String, duration: Int = Snackbar.LENGTH_SHORT){
     val snackbar = Snackbar.make(window.decorView,msg,duration)
     snackbar.view.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+    snackbar.view.findViewById<TextView>(android.support.design.R.id.snackbar_text)
+            .setTextColor(Color.WHITE)
     val navigatonBarHeight = getNavigationBarHeight()
     val params = snackbar.view.layoutParams as FrameLayout.LayoutParams
     params.bottomMargin = navigatonBarHeight
     snackbar.view.layoutParams = params
     snackbar.view.elevation = 0f
     snackbar.show()
+}
+
+/**
+ * 显示[Toast]默认样式
+ */
+fun toast(@NonNull text: String, duration: Int = Toast.LENGTH_SHORT){
+    Toast.makeText(BaseApplication.context,text,duration).show()
+}
+
+/**
+ * 显示[Toast]自定义样式
+ */
+fun toastView(@NonNull view: View, duration: Int = Toast.LENGTH_LONG, gravity: Int = Gravity.BOTTOM, x: Int, y: Int){
+    val toast = Toast(BaseApplication.context)
+    toast.view = view
+    toast.duration = duration
+    if (gravity != Gravity.BOTTOM){
+        toast.setGravity(gravity,x,y)
+    }
+    toast.show()
 }
 

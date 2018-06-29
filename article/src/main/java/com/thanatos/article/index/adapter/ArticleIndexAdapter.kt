@@ -6,11 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.thanatos.article.R
-import com.thanatos.article.R.id.tvUserName
-import com.thanatos.baselibrary.ext.dp2px
-import com.thanatos.baselibrary.ext.hasNet
-import com.thanatos.baselibrary.ext.withCircleRes
-import com.thanatos.baselibrary.ext.withRes
+import com.thanatos.baselibrary.ext.*
 import com.thanatos.baselibrary.net.ArticleBean
 import kotlinx.android.synthetic.main.article_item_index_home.view.*
 import pw.androidthanatos.router.Request
@@ -26,6 +22,10 @@ import pw.androidthanatos.router.Router
 class ArticleIndexAdapter(private val activity: Activity) : RecyclerView.Adapter<ArticleIndexAdapter.ArticleIndexViewHolder>(){
 
     val data = mutableListOf<ArticleBean>()
+
+    private var _collect:(Int, Int) -> Unit? = { id: Int, position: Int -> }
+
+    private var _unCollect:(Int, Int) -> Unit? = {id: Int, position: Int ->}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleIndexViewHolder {
         return ArticleIndexViewHolder(View.inflate(parent.context, R.layout.article_item_index_home, null))
@@ -43,8 +43,21 @@ class ArticleIndexAdapter(private val activity: Activity) : RecyclerView.Adapter
         holder.itemView.tvDate.text = bean.niceDate
 
         holder.itemView.rbCollect.setOnClickListener {
-            if (!hasNet()){
-
+            holder.itemView.rbCollect.isChecked = bean.collect
+            if (!hasNet()){//当前网络不可用
+                toast(NO_NET)
+                return@setOnClickListener
+            }
+            if (!isLogin()){ //没有登录，去登录页面
+                Router.getInstance().path("/mine/login")
+                return@setOnClickListener
+            }
+            bean.collect = !bean.collect
+            holder.itemView.rbCollect.isChecked = bean.collect
+            if (bean.collect){
+                this._collect(bean.id,holder.adapterPosition)
+            }else{
+                this._unCollect(bean.id,holder.adapterPosition)
             }
         }
 
@@ -64,5 +77,10 @@ class ArticleIndexAdapter(private val activity: Activity) : RecyclerView.Adapter
                 Router.getInstance().newCall(request).execute()
             }
         }
+    }
+
+    public fun addCollectListener(collect:(Int, Int) -> Unit?, unCollect:(Int, Int) -> Unit?){
+        this._collect = collect
+        this._unCollect = unCollect
     }
 }
